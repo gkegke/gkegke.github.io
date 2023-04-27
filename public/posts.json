@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "title": "1. Getting Einstein to teach you General Relativity - AI in Education",
+    "date" : "25th March 2023",
+    "keywords": [
+      {
+        "text": "AI",
+        "weight": 10
+      },
+      {
+        "text": "education",
+        "weight": 8
+      },
+      {
+        "text": "immersiveness",
+        "weight": 6
+      },
+      {
+        "text": "context",
+        "weight": 6
+      },
+      {
+        "text": "variance",
+        "weight": 6
+      },
+      {
+        "text": "learning",
+        "weight": 6
+      },
+      {
+        "text": "metaverse",
+        "weight": 5
+      },
+      {
+        "text": "deep",
+        "weight": 5
+      },
+      {
+        "text": "stimulating",
+        "weight": 4
+      },
+      {
+        "text": "perspectives",
+        "weight": 4
+      },
+      {
+        "text": "emotions",
+        "weight": 4
+      },
+      {
+        "text": "geopolitical",
+        "weight": 4
+      },
+      {
+        "text": "outcomes",
+        "weight": 4
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "2. AI generating data for other AI - what you might be discounting",
+    "date" : "4th April 2023",
+    "keywords": [
+        { "text": "AI", "weight": 10 },
+        { "text": "data", "weight": 8 },
+        { "text": "Nvidia", "weight": 7 },
+        { "text": "GPU", "weight": 6 },
+        { "text": "performance", "weight": 6 },
+        { "text": "parameters", "weight": 6 },
+        { "text": "deep learning", "weight": 5 },
+        { "text": "models", "weight": 5 },
+        { "text": "complexity", "weight": 5 },
+        { "text": "high quality", "weight": 5 },
+        { "text": "Alpaca", "weight": 4 },
+        { "text": "LLM", "weight": 4 },
+        { "text": "image recognition", "weight": 4 },
+        { "text": "robotics", "weight": 4 },
+        { "text": "exponential rate", "weight": 4 },
+        { "text": "synergistically", "weight": 3 }
+      ]
+  },
+  {
+    "id": 3,
+    "title": "3.  Ripping off their own wings, Loss aversion and why big businesses suck at pivoting",
+    "date" : "19th April 2023",
+    "keywords": [
+        {"text": "Loss aversion", "weight": 9},
+        {"text": "big businesses", "weight": 6},
+        {"text": "pivoting", "weight": 5},
+        {"text": "pseudo-monopolies", "weight": 4},
+        {"text": "market share", "weight": 4},
+        {"text": "IBM", "weight": 3},
+        {"text": "Kodak", "weight": 3},
+        {"text": "Blockbuster", "weight": 3},
+        {"text": "Sears", "weight": 3},
+        {"text": "new comers", "weight": 4},
+        {"text": "funding", "weight": 3},
+        {"text": "resources", "weight": 4},
+        {"text": "losses", "weight": 7},
+        {"text": "investors", "weight": 3},
+        {"text": "pain", "weight": 5}
+    ]
+  }
+]
+
+
+
+
