@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 
 import WordCloud from '../common/wordcloud.js';
 import Generator from '../common/generator.js';
-//import Memes from '../common/memes.js';
+import Memes from '../common/memes.js';
 import './home.css';
 
 function Posts({ postList, getPost, hiddenWords, hidePost, currentPost, isPostVisible }) {
@@ -50,30 +50,35 @@ function Posts({ postList, getPost, hiddenWords, hidePost, currentPost, isPostVi
 
   return (
     <>
-      <div id="totalPosts">{visiblePosts.length} posts..</div>
-      <div id="postsw">
-        <Stack id="posts">
-          {postList.map((post) => (
-            <div
-              key={post.id}
-              className={`post ${isPostVisible && currentPost.id === post.id ? 'selected' : ''} ${visiblePosts.includes(post) ? '' : 'hidden'}`}
-            >
-              <div className="postTimeLineIcon">{post.date}</div>
-              <button className="postButton" onClick={() => getPost(post.id)}>
-                <div className="postTitle">
-                  {post.title}
-                 {/* <div className="postDate">{post.date}</div>*/}
-                </div>
-                <WordCloud
-                  className="postWC"
-                  height={200}
-                  maxWidth={800}
-                  words={post.keywords}
-                  maxFontSize={35} />
-              </button>
-            </div>
-          ))}
-        </Stack>
+      <div id="posts-view">
+        <div id="totalPosts">{visiblePosts.length} posts..</div>
+        <div id="postsw">
+          <Stack id="posts">
+            { visiblePosts.length === 0 ? <span>No posts that match all the filters.</span>
+            : (postList.map((post) => (
+              <div
+                key={post.id}
+                className={`post ${isPostVisible && currentPost.id === post.id ? 'selected' : ''} ${visiblePosts.includes(post) ? '' : 'hidden'}`}
+              >
+                <div className="postTimeLineIcon">{post.date}</div>
+                <button className="postButton" onClick={() => getPost(post.id)}>
+                  <div className="postTitle">
+                    {post.title}
+                   {/* <div className="postDate">{post.date}</div>*/}
+                  </div>
+                  <WordCloud
+                    className="postWC"
+                    height={200}
+                    maxWidth={800}
+                    words={post.keywords}
+                    maxFontSize={35} />
+                </button>
+              </div>
+            )))
+
+            }
+          </Stack>
+        </div>
       </div>
 
       {isPostVisible && (
@@ -194,7 +199,6 @@ export default function Home() {
   return (
     <>
       <Generator />
-      <div className="main">
         <div id="about">
           <WordCloud
             words={getSortedKeywords(postList)}
@@ -213,8 +217,7 @@ export default function Home() {
           isPostVisible={isPostVisible}
         />
         <div className="empty"></div>
-        {/*<Memes />*/}
-      </div>
+        <Memes />
     </>
   );
 }

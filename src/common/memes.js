@@ -1,22 +1,23 @@
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
 import './memes.css';
 
+const parsedFilename = (filename) => {
+  const parts = filename.split("-");
+  const name = parts[0] + ".jpg";
+  return name;
+}
+
 const Memes = () => {
   const [selectedImg, setSelectedImg] = useState(null);
-  const scrollRef = useRef(null);
 
   const handleImgClick = (e) => {
-    setSelectedImg(e.target.src);
-  };
-
-  const handleScrollRight = () => {
-    scrollRef.current.scrollLeft += 200;
+    setSelectedImg(parsedFilename(e.target.src));
   };
 
   const memes = [];
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= 2; i++) {
     memes.push(
       <img
         key={i}
@@ -33,11 +34,8 @@ const Memes = () => {
   return (
     <div id="memes-wrapper">
       <div id="memes">
-        <div className="scroll-container" ref={scrollRef}>
+        <div className="scroll-container">
           {memes}
-        </div>
-        <div className="scroll-buttons-right">
-          <button onClick={handleScrollRight}>{'➡️'}</button>
         </div>
         {selectedImg && (
           <div className="modal">

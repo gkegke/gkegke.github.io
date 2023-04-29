@@ -1,44 +1,24 @@
 #memes {
-  margin: 50px 0;
-  text-align: center;
-}
-
-#memes button {
-  display: none;
-  font-size: 24px;
-  margin-right: 16px;
-  margin-left: 16px;
-  padding: 50px 10px;
-  background: #111;
-  color: #fff;
-  border: 1px solid #c9c9c9;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease-in-out;
-}
-
-#memes button:hover {
-  background-color: #0080ff;
 }
 
 .scroll-container {
   padding: 10px;
   margin: 0 auto;
-  display: flex;
   overflow-x: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
-}
-
-.scroll-container::-webkit-scrollbar {
-  display: none;
+  transition: 2s ease-in-out;
 }
 
 .scroll-container img {
   display: block;
   margin: 10px;
   border-radius: 5px;
-  width: 50px;
+  transition: 0.5s ease-in-out;
+}
+
+.scroll-container:hover img:hover {
+  transform: scale(1.5);
 }
 
 .modal {
@@ -55,13 +35,12 @@
 }
 
 .modal-image {
-  max-height: 90vh;
-  max-width: 90vw;
+  width: auto;
+  height: auto;
   cursor: pointer;
   opacity: 1;
 }
 
 #memes-wrapper {
-  display: flex;
   justify-content: center;
 }
