@@ -102,6 +102,25 @@
         {"text": "investors", "weight": 3},
         {"text": "pain", "weight": 5}
     ]
+  },
+  {
+    "id": 4,
+    "title": "4. Exponential technologies that 'jump' into existence, bottleneck thinking, cross pollination, and why cities will never die(?)",
+    "date" : "5th May 2023",
+    "keywords": [
+    {"text": "cross pollination", "weight" : 3 },
+    {"text": "bottlenecks", "weight" : 3 },
+    {"text": "networks of ideas", "weight" : 2 },
+    {"text": "ideas", "weight" : 2 },
+    {"text": "technology", "weight" : 2 },
+    {"text": "exponential technologies", "weight" : 2 },
+    {"text": "cities", "weight" : 2 },
+    {"text": "innovation", "weight" : 1 },
+    {"text": "creativity", "weight" : 1 },
+    {"text": "universities", "weight" : 1 },
+    {"text": "service jobs", "weight" : 1 },
+    {"text": "population densities", "weight" : 1 }
+    ]
   }
 ]
 
