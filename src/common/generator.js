@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Space, Button } from 'antd';
 
 import "./generator.css";
 
@@ -16,6 +17,7 @@ function bisectLeft(arr, value, lo = 0, hi = arr.length) {
 
 export default function Generator() {
   const [generated, setGenerated] = useState([]);
+  const [lastGenerated, setLastGenerated] = useState(null);
 
   /**
    * Generates a random string of characters based on a
@@ -33,10 +35,11 @@ export default function Generator() {
     const _char_thresholds = [0.005, 0.3, 0.4, 0.5, 1];
     const _chars = ["♪", "、", "ヽ", "｀", " "];
     const _color_thresholds = [0.05, 0.15, 0.3, 0.5, 1];
-    const _colors = ["#ff0000", "#ffff00", "#088395","#0080ff", "#8dc2f7"];
+    //const _colors = ["#ff0000", "#ffff00", "#088395","#0080ff", "#8dc2f7"];
+    const _colors = ["#ff0000", "#ffff00", "#088395","#0080ff", "#e1e1e1"];
     const result = [];
     const windowWidth = window.innerWidth;
-    const n = Math.floor(windowWidth/4);
+    const n = Math.floor(windowWidth);
   
     for (let i = 0; i < n; i++) {
 
@@ -56,16 +59,34 @@ export default function Generator() {
     }
   
     setGenerated(result);
+    setLastGenerated(Date.now());
   }
 
   useEffect(() => {
     let requestId = null;
+    
     const animate = () => {
-      generate();
+
+      // Check the difference between the current time and the lastGenerated time
+      let diff = Date.now() - lastGenerated;
+
+      // If the difference is greater than or equal to 2000 milliseconds, call generate
+      if (lastGenerated === null || diff >= 2000) {
+        generate();
+      } else {
+        console.log(`
+          request ID: ${requestId}
+          lastGenerated: ${lastGenerated}
+          diff: ${diff}
+        `);
+      }
+
+      // Set a timeout for 2000 milliseconds before requesting the next animation frame
       setTimeout(() => {
         requestId = requestAnimationFrame(animate);
       }, 500);
     };
+
     animate();
   
     return () => {
@@ -74,9 +95,19 @@ export default function Generator() {
   }, []);
 
 
-  return (
+  return (<>
     <div id="display">
-      <div id="logo"><span>gkegke</span> <small>just some random thoughts</small></div>
+      <Space
+        id="logow"
+      >
+        <div className="logo">
+          <b>__</b> gkegke
+        </div>
+        <span className="random">
+          just some random thoughts
+        </span>
+        <a href="https://github.com/gkegke">github</a>
+      </Space>
       <div className="generated">
         {generated.map((item, index) => (
         <span key={index} style={{ color: item.props.style.color }}>
@@ -85,5 +116,5 @@ export default function Generator() {
         ))}
       </div>
     </div>
-  );
+  </>);
 }

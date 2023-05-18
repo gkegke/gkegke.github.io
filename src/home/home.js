@@ -3,9 +3,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw'
 
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+import { Space, Button } from 'antd';
 
 import WordCloud from '../common/wordcloud.js';
 import Generator from '../common/generator.js';
@@ -50,21 +50,21 @@ function Posts({ postList, getPost, hiddenWords, hidePost, currentPost, isPostVi
 
   return (
     <>
+      { !isPostVisible && (
       <div id="posts-view">
         <div id="totalPosts">{visiblePosts.length} posts..</div>
         <div id="postsw">
-          <Stack id="posts">
-            { visiblePosts.length === 0 ? <span>No posts that match all the filters.</span>
+          <Space id="posts" direction="vertical">
+            { visiblePosts.length === 0 ? <span>0 posts match the filters.</span>
             : (postList.map((post) => (
               <div
                 key={post.id}
                 className={`post ${isPostVisible && currentPost.id === post.id ? 'selected' : ''} ${visiblePosts.includes(post) ? '' : 'hidden'}`}
               >
-                <div className="postTimeLineIcon">{post.date}</div>
-                <button className="postButton" onClick={() => getPost(post.id)}>
+                <a className="postButton" onClick={() => getPost(post.id)}>
                   <div className="postTitle">
                     {post.title}
-                   {/* <div className="postDate">{post.date}</div>*/}
+                   <div className="postTimeLineIcon">{post.date}</div>
                   </div>
                   <WordCloud
                     className="postWC"
@@ -72,14 +72,15 @@ function Posts({ postList, getPost, hiddenWords, hidePost, currentPost, isPostVi
                     maxWidth={800}
                     words={post.keywords}
                     maxFontSize={35} />
-                </button>
+                </a>
               </div>
             )))
 
             }
-          </Stack>
+          </Space>
         </div>
       </div>
+      )}
 
       {isPostVisible && (
         <div id="post-container">
@@ -96,7 +97,7 @@ function Posts({ postList, getPost, hiddenWords, hidePost, currentPost, isPostVi
               <div className="cpostDate">
                   {currentPost.date}
               </div>
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
                 {currentPost.content}
               </ReactMarkdown>
               <div className="empty"></div>
@@ -198,26 +199,33 @@ export default function Home() {
 
   return (
     <>
-      <Generator />
-        <div id="about">
-          <WordCloud
-            words={getSortedKeywords(postList)}
-            clickable={true}
-            maxWidth={1000}
-            height={400}
-            handleWordClick={handleWordClick}
-          />
-        </div>
-        <Posts
-          postList={postList}
-          hiddenWords={hiddenWords}
-          getPost={getPost}
-          hidePost={hidePost}
-          currentPost={currentPost}
-          isPostVisible={isPostVisible}
+      <div id="top">
+        <Generator />
+        <WordCloud
+          words={getSortedKeywords(postList)}
+          clickable={true}
+          maxWidth={1000}
+          height={400}
+          handleWordClick={handleWordClick}
         />
-        <div className="empty"></div>
-        <Memes />
+      </div>
+
+      <Posts
+        postList={postList}
+        hiddenWords={hiddenWords}
+        getPost={getPost}
+        hidePost={hidePost}
+        currentPost={currentPost}
+        isPostVisible={isPostVisible}
+      />
+
+      {!isPostVisible && (<>
+
+      <div className="empty"></div>
+      <Memes />
+
+      </>)}
+
     </>
   );
 }

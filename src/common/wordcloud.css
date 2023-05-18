@@ -22,11 +22,11 @@
 
 .wordcloud .clickable {
   padding: 5px;
-  transition: 0.5s ease-in-out;
+  transition: 0.25s ease-in-out;
 }
 
 .wordcloud .clickable:hover {
-  transition: 0.5s ease-in-out;
+  transition: 0.25s ease-in-out;
 }
 
 .wordcloud .clickable:hover,
@@ -34,6 +34,7 @@
   border-radius: 5px;
   color: #fff;
   background: #0080ff;
-  opacity: 1;
+  opacity: 0.8;
+  transform: scale(1.2);
 }
 

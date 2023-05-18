@@ -20,14 +20,24 @@
   }
 }
 
+#top {
+  color: #fff;
+  background: #000;
+  opacity: 0.9;
+  position: relative;
+  overflow: hidden;
+  padding: 0 0 50px 0;
+}
+
 #totalPosts {
   text-align: center;
   color: #c9c9c9;
+  padding: 30px 0 0 0;
 }
 
 #postsw {
-  margin: 50px auto;
   padding: 0 0 0 10px;
+  text-align: center;
 }
 
 #postsw.hidden {
@@ -51,15 +61,11 @@
   animation-name: slide-in2;
   animation-duration: 0.5s;
   border: 0;
-  color: #fff;
-  background: #111;
-  border: 1px solid #111;
+  color: #111;
   border-left: 0;
   border-radius: 10px;
   margin: 10px 0;
 }
-
-.post * { color: #fff; }
 
 .post.hidden {
   opacity: 0;
@@ -68,14 +74,12 @@
 
 .postTimeLineIcon {
   font-size: 0.7em;
-  color: #fff;
-  background-color: #111;
-  position: absolute;
+  color: #777;
   padding: 5px;
 }
 
-.postButton {
-  transition: background-color 0.5s ease-in-out;
+a.postButton {
+  color: #111;
   border: 0;
   width: 100%;
   background: none;
@@ -84,11 +88,7 @@
 }
 
 .post:hover {
-  background: #111;
-}
-
-.post:hover * {
-  color: #fff;
+  color: #0080ff;
 }
 
 .post:hover .postTitle { color: #0080ff; }
@@ -96,7 +96,7 @@
 .postTitle {
   vertical-align: top;
   font-size: 25px;
-  color: #fff;
+  color: #111;
   font-weight: bold;
 }
 

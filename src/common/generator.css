@@ -1,36 +1,49 @@
 #display {
-    font-size: 2.5em;
     background: #fff;
     color: #111;
     position: relative;
-    height: 175px;
     width: 100vw;
 }
 
-#logo {
-  position: absolute;
-  top: 50px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  text-align: center;
+#logow {
+  font-size: 2em;
+  padding: 10px 10px 5px 10px;
+  background: #fff;
 }
 
+.logo b {
+  color: #0080ff;
+}
 
-#logo small {
-  font-size: 0.7em;
-  color: #b1b1b1;
+.random {
+  font-size: 0.5em;
+  background: #111;
+  color: #fff;
+}
+
+#logow a {
+  font-size: 0.5em;
+  background: #0080ff;
+  color: #fff;
+}
+
+#logow a:hover {
+  background: #00ff00;
 }
 
 .generated {
-  position: fixed;
+  z-index: -999;
+  font-size: 1.5em;
+  width: 100vw;
+  height: auto;
+  padding: 30px 0;
+  background: #000;
+  overflow: hidden;
+  position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
-  font-size: 0.7em;
-  opacity: 0.5;
-  height: 150px;
-  width: 100vw;
-  overflow: hidden;
 }
 
+.logo.ant-menu-item-disabled {
+  color: black;
+}
