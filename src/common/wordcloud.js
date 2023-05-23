@@ -27,7 +27,7 @@ const WordCloud = ({ words, height, maxWidth, showPercentage=80, maxFontSize=48,
 
   const [randomTops, setRandomTops] = useState([]);
   const [randomRights, setRandomRights] = useState([]);
-  const [currentShowPercentage, showCurrentShowPercentage] = useState(showPercentage);
+  const [displayedWords, setDisplayedWords] = useState(words);
   const [currentMaxFontSize, setCurrentMaxFontSize] = useState(maxFontSize);
   const [previousWindowWidth, setPreviousWindowWidth] = useState(window.innerWidth);
 
@@ -44,18 +44,26 @@ const WordCloud = ({ words, height, maxWidth, showPercentage=80, maxFontSize=48,
   
     if (windowWidth < 400) {
       newMaxFontSize = 25;
-      newShowPercentage = 80;
+      newShowPercentage = 30;
     } else if (windowWidth < 500) {
       newMaxFontSize = 30;
-      newShowPercentage = 90;
+      newShowPercentage = 50;
     }
   
+    const dwords = words.slice(0, Math.floor((newShowPercentage/100) * words.length));
+
     setCurrentMaxFontSize(newMaxFontSize);
-    showCurrentShowPercentage(newShowPercentage);
     setRandomTops([]);
   
-    console.log(`test ${windowWidth}`);
+    console.log(`
+      ww: ${windowWidth}
+      words length: ${words.length}
+      newShowPercentage: ${newShowPercentage}
+      slicen : ${Math.floor((newShowPercentage/100) * words.length)}
+      wn: ${dwords.length}
+    `);
   
+    setDisplayedWords((prev) => dwords);
     setPreviousWindowWidth(windowWidth);
   }, [maxWidth, previousWindowWidth, maxFontSize, showPercentage]);
 
@@ -99,18 +107,20 @@ const WordCloud = ({ words, height, maxWidth, showPercentage=80, maxFontSize=48,
     };
   };
 
- 
+  //{/*words.slice(0, Math.floor((currentShowPercentage/100) * words.length)).map(({ text }, index) => (*/
   return (
     <center>
       <div className="wordcloud" style={{height: height}}>
-        {words.slice(0, Math.floor((currentShowPercentage/100) * words.length)).map(({ text }, index) => (
-          clickable ? <Button
-                        key={index}
-                        style={listItemStyle(index)}
-                        text={text}
-                        handleWordClick={handleWordClick}/>
-                    : <div key={index} style={listItemStyle(index)}>{text}</div>
-        ))}
+        {
+          displayedWords.map(({ text }, index) => (
+              clickable ? <Button
+                            key={index}
+                            style={listItemStyle(index)}
+                            text={text}
+                            handleWordClick={handleWordClick}/>
+                        : <div key={index} style={listItemStyle(index)}>{text}</div>
+          ))
+        }
       </div>
     </center>
   );

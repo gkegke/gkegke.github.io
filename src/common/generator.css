@@ -1,5 +1,5 @@
+
 #display {
-    background: #fff;
     color: #111;
     position: relative;
     width: 100vw;
@@ -8,18 +8,27 @@
 #logow {
   font-size: 2em;
   padding: 10px 10px 5px 10px;
-  background: #fff;
+  background: #000;
+}
+
+.logo {
+  color: #fff;
 }
 
 .logo b {
   color: #0080ff;
 }
 
-.random {
+.random, .random2 {
   font-size: 0.5em;
   background: #111;
   color: #fff;
 }
+
+.random2 {
+  display: none;
+}
+
 
 #logow a {
   font-size: 0.5em;
@@ -46,4 +55,16 @@
 
 .logo.ant-menu-item-disabled {
   color: black;
+}
+
+@media (max-width: 700px) {
+
+  .random, .github {
+    display: none;
+  }
+
+  .random2 {
+    display: inline;
+  }
+
 }

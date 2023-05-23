@@ -106,7 +106,10 @@ export default function Generator() {
         <span className="random">
           just some random thoughts
         </span>
-        <a href="https://github.com/gkegke">github</a>
+        <span className="random2">
+          thoughts
+        </span>
+        <a className="github" href="https://github.com/gkegke">github</a>
       </Space>
       <div className="generated">
         {generated.map((item, index) => (
