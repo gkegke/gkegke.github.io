@@ -37,3 +37,10 @@
   opacity: 0.8;
   transform: scale(1.2);
 }
+
+
+@media (max-width: 750px) {
+  .wordcloud .clickable:nth-child(n+15) {
+    display: none;
+  }
+}

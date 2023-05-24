@@ -27,7 +27,6 @@ const WordCloud = ({ words, height, maxWidth, showPercentage=80, maxFontSize=48,
 
   const [randomTops, setRandomTops] = useState([]);
   const [randomRights, setRandomRights] = useState([]);
-  const [displayedWords, setDisplayedWords] = useState(words);
   const [currentMaxFontSize, setCurrentMaxFontSize] = useState(maxFontSize);
   const [previousWindowWidth, setPreviousWindowWidth] = useState(window.innerWidth);
 
@@ -40,32 +39,22 @@ const WordCloud = ({ words, height, maxWidth, showPercentage=80, maxFontSize=48,
     }
   
     let newMaxFontSize = maxFontSize;
-    let newShowPercentage = showPercentage;
   
     if (windowWidth < 400) {
       newMaxFontSize = 25;
-      newShowPercentage = 30;
     } else if (windowWidth < 500) {
       newMaxFontSize = 30;
-      newShowPercentage = 50;
     }
   
-    const dwords = words.slice(0, Math.floor((newShowPercentage/100) * words.length));
-
     setCurrentMaxFontSize(newMaxFontSize);
     setRandomTops([]);
   
     console.log(`
       ww: ${windowWidth}
-      words length: ${words.length}
-      newShowPercentage: ${newShowPercentage}
-      slicen : ${Math.floor((newShowPercentage/100) * words.length)}
-      wn: ${dwords.length}
     `);
   
-    setDisplayedWords((prev) => dwords);
     setPreviousWindowWidth(windowWidth);
-  }, [maxWidth, previousWindowWidth, maxFontSize, showPercentage]);
+  }, [maxWidth, previousWindowWidth, maxFontSize]);
 
   useEffect(() => {
 
@@ -88,7 +77,6 @@ const WordCloud = ({ words, height, maxWidth, showPercentage=80, maxFontSize=48,
       setRandomRights(words.map(() => (Math.random() * windowWidth) - 10));
     }
   }, [words, randomTops.length, height, maxWidth]);
-
   
   const listItemStyle = (wordIndex) => {
     const minSize = 16;
@@ -98,7 +86,6 @@ const WordCloud = ({ words, height, maxWidth, showPercentage=80, maxFontSize=48,
     const sizeRatio = (sizes[wordIndex] - Math.min(...sizes)) / (Math.max(...sizes) - Math.min(...sizes));
     const fontSize = Math.round(minSize + sizeRatio * sizeRange);
     return {
-      display: 'inline-block',
       fontFamily: 'Arial',
       fontSize: `${fontSize}px`,
       position: 'absolute',
@@ -107,12 +94,11 @@ const WordCloud = ({ words, height, maxWidth, showPercentage=80, maxFontSize=48,
     };
   };
 
-  //{/*words.slice(0, Math.floor((currentShowPercentage/100) * words.length)).map(({ text }, index) => (*/
   return (
     <center>
       <div className="wordcloud" style={{height: height}}>
         {
-          displayedWords.map(({ text }, index) => (
+          words.map(({ text }, index) => (
               clickable ? <Button
                             key={index}
                             style={listItemStyle(index)}
