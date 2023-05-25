@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Space, Button } from 'antd';
+import React, { useRef, useState, useEffect, useCallback } from "react";
+import { Space } from 'antd';
 
 import "./generator.css";
 
@@ -16,75 +16,117 @@ function bisectLeft(arr, value, lo = 0, hi = arr.length) {
 }
 
 export default function Generator() {
-  const [generated, setGenerated] = useState([]);
+  const canvas = useRef();
+  const [context, setContext] = useState(null);
   const [lastGenerated, setLastGenerated] = useState(null);
+  const [previousWindowWidth, setPreviousWindowWidth] = useState(window.innerWidth);
 
-  /**
-   * Generates a random string of characters based on a
-   * given probability distribution.
-   * 
-   * Uses bisectLeft to check which interval the random variable
-   * x is within to select the approriate new char to add to final
-   * result string.
-   *
-   * @function generate
-   *
-   * @returns {string} 
-  */
-  function generate() {
-    const _char_thresholds = [0.005, 0.3, 0.4, 0.5, 1];
-    const _chars = ["♪", "、", "ヽ", "｀", " "];
-    const _color_thresholds = [0.05, 0.15, 0.3, 0.5, 1];
-    //const _colors = ["#ff0000", "#ffff00", "#088395","#0080ff", "#8dc2f7"];
-    const _colors = ["#ff0000", "#ffff00", "#088395","#0080ff", "#e1e1e1"];
-    const result = [];
+const generate = useCallback(() => {
+  const _char_thresholds = [0.005, 0.3, 0.4, 0.5, 1];
+  const _chars = ["♪", "、", "ヽ", "｀", " "];
+  const _color_thresholds = [0.05, 0.15, 0.3, 0.5, 1];
+  const _colors = ["#ff0000", "#ffff00", "#088395", "#0080ff", "#e1e1e1"];
+
+  // clear the previous content
+  context.clearRect(0, 0, window.innerWidth*3, window.innerHeight*3);
+
+  const n = window.innerWidth * 20; // adjust the number of characters based on font size
+  const lineHeight = 50; // adjust the desired line height
+
+  let currentX = 0;
+  let currentY = 0;
+
+  for (let i = 0; i < n; i++) {
+    const x = Math.random();
+    const y = Math.random();
+    const oindex = bisectLeft(_char_thresholds, x);
+    const cindex = bisectLeft(_color_thresholds, y);
+
+    const s = _chars[oindex];
+    const c = _colors[cindex];
+
+    // draw the text on the canvas
+    context.font = "30px Verdana"; // adjust the font size and family
+    context.fillStyle = c;
+    context.fillText(s, currentX, currentY); // adjust the position and alignment
+
+    currentX += 20; // increment the x-coordinate by the character width
+
+    // check if the x-coordinate exceeds the window width
+    if (currentX + 20 > window.innerWidth) {
+      currentX = 0; // reset x-coordinate to the beginning of the line
+      currentY += lineHeight; // move to the next line
+    }
+  }
+}, [context]);
+
+  useEffect(() => {
+    const canvasEle = canvas.current;
+    if (canvasEle) {
+      const ctx = canvasEle.getContext("2d");
+      canvasEle.width = window.innerWidth;
+      canvasEle.height = 450;
+      if (ctx) {
+        setContext(ctx);
+      } else {
+        console.error("Failed to get context.");
+      }
+    }
+  }, [canvas]);
+
+  const handleResize = useCallback(() => {
     const windowWidth = window.innerWidth;
-    const n = Math.floor(windowWidth);
+    const windowWidthDiff = Math.abs(windowWidth - previousWindowWidth);
   
-    for (let i = 0; i < n; i++) {
-
-      const x = Math.random();
-      const y = Math.random();
-      const oindex = bisectLeft(_char_thresholds, x);
-      const cindex = bisectLeft(_color_thresholds, y);
-
-      const s = _chars[oindex];
-      const c = _colors[cindex];
-
-      result.push(
-        <span key={i} style={{ color: c }}>
-          {s}
-        </span>
-      );
+    if (windowWidthDiff < 25 || windowWidth === previousWindowWidth) {
+      return;
     }
   
-    setGenerated(result);
-    setLastGenerated(Date.now());
-  }
+    const canvasEle = canvas.current;
+    if (canvasEle) {
+      canvasEle.width = window.innerWidth;
+      canvasEle.height = 450;
+    }
+
+    generate();
+
+  }, [previousWindowWidth, generate]);
+
+  useEffect(() => {
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, [handleResize]);
 
   useEffect(() => {
     let requestId = null;
     
     const animate = () => {
 
-      // Check the difference between the current time and the lastGenerated time
-      let diff = Date.now() - lastGenerated;
+      if (context !== null) {
+  
+        // Check the difference between the current time and the lastGenerated time
+        let diff = Date.now() - lastGenerated;
+  
+        // If the difference is greater than or equal to 2000 milliseconds, call generate
+        if (lastGenerated === null || diff >= 2000) {
+          generate();
+        } else {
+          console.log(`
+            request ID: ${requestId}
+            lastGenerated: ${lastGenerated}
+            diff: ${diff}
+          `);
+        }
 
-      // If the difference is greater than or equal to 2000 milliseconds, call generate
-      if (lastGenerated === null || diff >= 2000) {
-        generate();
-      } else {
-        console.log(`
-          request ID: ${requestId}
-          lastGenerated: ${lastGenerated}
-          diff: ${diff}
-        `);
       }
 
       // Set a timeout for 2000 milliseconds before requesting the next animation frame
       setTimeout(() => {
         requestId = requestAnimationFrame(animate);
-      }, 500);
+      }, 1500);
     };
 
     animate();
@@ -92,7 +134,7 @@ export default function Generator() {
     return () => {
       cancelAnimationFrame(requestId);
     };
-  }, []);
+  }, [context, generate, lastGenerated]); // add context as a dependency
 
 
   return (<>
@@ -111,13 +153,7 @@ export default function Generator() {
         </span>
         <a className="github" href="https://github.com/gkegke">github</a>
       </Space>
-      <div className="generated">
-        {generated.map((item, index) => (
-        <span key={index} style={{ color: item.props.style.color }}>
-          {item.props.children}
-        </span>
-        ))}
-      </div>
+      <canvas id="generated" ref={canvas} /> {/* use canvas instead of div */}
     </div>
   </>);
 }
