@@ -126,7 +126,7 @@ const generate = useCallback(() => {
       // Set a timeout for 2000 milliseconds before requesting the next animation frame
       setTimeout(() => {
         requestId = requestAnimationFrame(animate);
-      }, 1500);
+      }, 750);
     };
 
     animate();
