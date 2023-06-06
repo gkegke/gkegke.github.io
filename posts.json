@@ -121,6 +121,29 @@
     {"text": "service jobs", "weight" : 1 },
     {"text": "population densities", "weight" : 1 }
     ]
+  },
+  {
+    "id": 5,
+    "title": "5. Why copyright might finally be on it's way out in the age of AI",
+    "date" : "6th June 2023",
+    "keywords": [
+        { "text": "AI", "weight": 10 },
+        { "text": "copyright", "weight": 9 },
+        { "text": "similar yet dissimilar", "weight": 8 },
+        { "text": "Japan", "weight": 7 },
+        { "text": "Pokemon", "weight": 7 },
+        { "text": "fakemon", "weight": 6 },
+        { "text": "generator", "weight": 6 },
+        { "text": "creative", "weight": 5 },
+        { "text": "mass produce", "weight": 5 },
+        { "text": "concept", "weight": 5 },
+        { "text": "Pikachu", "weight": 4 },
+        { "text": "cute electric thunder mouse", "weight": 4 },
+        { "text": "catalogue", "weight": 4 },
+        { "text": "monster pets", "weight": 4 },
+        { "text": "fan made", "weight": 4 },
+        { "text": "high dimensional space", "weight": 4 }
+      ]
   }
 ]
 
