@@ -186,6 +186,34 @@
 { "text": "challenges", "weight": 5 },
 { "text": "game mechanics", "weight": 5 }
  ]
+},
+  {
+    "id": 8,
+    "title": "8. How important is human capital in AI (a Nvidia hit piece?)",
+    "date" : "8th Mar 2024",
+"keywords": [
+    { "text": "human capital", "weight": 10 },
+    { "text": "inequality", "weight": 9 },
+    { "text": "economy", "weight": 9 },
+    { "text": "raw materials", "weight": 8 },
+    { "text": "infrastructure", "weight": 8 },
+    { "text": "government", "weight": 7 },
+    { "text": "wealth creation", "weight": 7 },
+    { "text": "simpler economies", "weight": 6 },
+    { "text": "scale", "weight": 6 },
+    { "text": "compute", "weight": 6 },
+    { "text": "AI development", "weight": 5 },
+    { "text": "open source community", "weight": 5 },
+    { "text": "startups", "weight": 5 },
+    { "text": "stock market", "weight": 5 },
+    { "text": "innovation", "weight": 4 },
+    { "text": "AGI", "weight": 4 },
+    { "text": "technology", "weight": 4 },
+    { "text": "venture", "weight": 4 },
+    { "text": "investment", "weight": 4 },
+    { "text": "Nvidia", "weight": 3 }
+]
+
 }
 
 ]
