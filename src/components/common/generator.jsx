@@ -32,7 +32,7 @@ const generate = useCallback(() => {
   // clear the previous content
   context.clearRect(0, 0, canvas.current.width, canvas.current.height);
 
-  const n = 10 * 10; // adjust the number of characters based on font size
+  const n = 20 * 20; // adjust the number of characters based on font size
   const lineHeight = 20; // adjust the desired line height
 
   let currentX = 0;
