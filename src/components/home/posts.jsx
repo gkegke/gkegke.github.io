@@ -9,15 +9,14 @@ import WordCloud from '../common/wordcloud.jsx';
 export default function Posts({ postList, getPost, selectedPostId, togglePostButton }) {
 
   return (
-    <div className={`flex justify-start items-center overflow-x-scroll py-4 m-2 scroll`}
+    <div className={`flex justify-start items-center overflow-x-scroll py-2 m-2 scroll`}
     >
 
-<div className="w-80 mx-2 flex flex-col">
+<div className="w-80 mx-1 flex flex-col">
 
             <Generator />
 
-      <div className="justify-start items-start text-sm z-20 m-3 flex flex-col gap-3 font-bold text-gray-700">
-        <div className="hidden sm:hover:block text-gray-400">Checkout: </div>
+      <div className="drop-shadow justify-start items-start text-sm z-20 m-3 flex flex-col gap-3 font-base text-gray-700">
         <Tooltip title="checkout"><a href="https://github.com/gkegke/LovoHato">LovoHato</a></Tooltip>
         <Tooltip title="checkout"><a href="https://github.com/gkegke/CardCraft">CardCraft</a></Tooltip>
         <Tooltip title="checkout"><a href="https://github.com/gkegke/ModernFileExplorer">ModernFileExplorer</a></Tooltip>
