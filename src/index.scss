@@ -31,15 +31,15 @@
 }
 
 /*
-    background-image: url("/images/xl.jpg");
     */
 #scroller {
+    background-image: url("/images/xl3.jpg");
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     pointer-events: none;
-    width: 600px;
-    height: 500px;
-    opacity: 20;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 #postToggle {
@@ -61,7 +61,7 @@
     transform: translateY(0);
   }
   to {
-    transform: translateY(-50%);
+    transform: translateY(-33%);
   }
 }
 

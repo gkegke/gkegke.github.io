@@ -33,7 +33,7 @@ export default function Post({ postId }) {
   return <img {...props} style={{maxWidth: '100%'}} />
 }
 
-  return (<div className={`z-20 w-full bg-gray-900 pb-20 text-gray-100 shadow drop-shadow flex justify-center items-center `}
+  return (<div className={`z-20 w-full bg-gry-900 pb-20 text-gray-100 shadow drop-shadow flex justify-center items-center `}
     >
         <div className={`markdown-content transition duration-300 ease-in-out ${
             postId !== null ? 'm-3 ml-3 mr-5 translate-x-0' : '-translate-x-full w-0 overflow-hidden'

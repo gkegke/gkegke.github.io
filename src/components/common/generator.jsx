@@ -27,7 +27,7 @@ const generate = useCallback(() => {
   const _char_thresholds = [0.005, 0.3, 0.4, 0.5, 1];
   const _chars = ["♪", "、", "ヽ", "｀", " "];
   const _color_thresholds = [0.05, 0.15, 0.3, 0.5, 1];
-  const _colors = ["#ff0000", "#ffff00", "#088395", "#0080ff", "#e1e1e1"];
+  const _colors = ["#ffffff", "#ffff00", "#088395", "#0080ff", "#e1e1e1"];
 
   // clear the previous content
   context.clearRect(0, 0, canvas.current.width, canvas.current.height);
@@ -117,7 +117,7 @@ const generate = useCallback(() => {
     <div 
       className={`relative m-2 w-72 h-80 border-none overflow-hidden hover:bg-blue-500`}
       >
-      <canvas className="rounded w-full h-full bg-white" ref={canvas} /> {/* use canvas instead of div */}
+      <canvas className="rounded w-full h-full opacity-80" ref={canvas} /> {/* use canvas instead of div */}
         <Space
           className="absolute top-5 left-5"
         >
@@ -126,12 +126,12 @@ const generate = useCallback(() => {
             href="https://github.com/gkegke"
             className="hover:bg-blue-500 p-2"
           >
-          <GithubOutlined className="text-black text-4xl" />
+          <GithubOutlined className="text-white text-4xl" />
         </a>
         </Tooltip>
   </Space>
       <Space
-       className="absolute bottom-5 left-5 text-black justify-start items-start flex flex-col"
+       className="absolute bottom-5 left-5 text-white justify-start items-start flex flex-col"
       >
         <div className="text-5xl font-bold">
           __ gkegke

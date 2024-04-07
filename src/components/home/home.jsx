@@ -40,7 +40,7 @@ const togglePostButton = (postId) => {
 
 
   return (
-    <div className={`flex flex-col overflow-hidden`}>
+    <div className={`flex flex-col overflow-hidden bg-black`}>
 
   <Posts
     postList={postList}
