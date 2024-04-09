@@ -34,12 +34,14 @@
     */
 #scroller {
     background-image: url("/images/xl3.jpg");
-    background-repeat: no-repeat;
     background-size: cover;
+    background-repeat: no-repeat;
     pointer-events: none;
     position: fixed;
-    top: 0;
-    left: 0;
+    top: -10vw;
+    left: -10vw;
+    width: 150vw;
+    height: 250vh;
 }
 
 #postToggle {
@@ -58,10 +60,10 @@
 
 @keyframes scroll {
   0% {
-    transform: translateY(0);
+    transform: translateY(0) rotate(-2deg);
   }
   to {
-    transform: translateY(-33%);
+    transform: translateY(-20%) rotate(-10deg);
   }
 }
 
