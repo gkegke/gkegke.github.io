@@ -2,15 +2,15 @@
   "name": "gkegke.github.io",
   "version": "1.0.0",
   "description": "Blog on github pages",
-  "private" : true,
+  "private": true,
   "engines": {
     "node": ">= 20.x",
     "npm": ">= 10.x"
   },
   "type": "module",
   "scripts": {
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d dist",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "build": "npx vite build",
     "clean": "rm -rf ./build",
     "dev": "npx vite serve",

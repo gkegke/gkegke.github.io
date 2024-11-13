@@ -7,7 +7,12 @@ import rehypeRaw from 'rehype-raw'
 
 import '../common/markdown.css';
 
-export default function Post({ postId }) {
+import {
+  AudioMutedOutlined,
+  AudioOutlined,
+} from '@ant-design/icons';
+
+export default function Post({ postId, focusedMode, toggleFocusMode }) {
 
     const [mdText, setMDText] = useState("");
 
@@ -30,16 +35,19 @@ export default function Post({ postId }) {
     }, [postId]);
 
     function Image(props) {
-  return <img {...props} style={{maxWidth: '100%'}} />
+  return <img {...props} style={{maxWidth: '90%'}} />
 }
 
-  return (<div className={`z-20 w-full bg-gry-900 pb-20 text-gray-100 shadow drop-shadow flex justify-center items-center `}
+  return (<div className={`px-10 text-gray-100 shadow drop-shadow flex justify-center items-center `}
+    style={focusedMode ? {minWidth: "300px", maxWidth: "800px", backgroundColor: "#0f0f0f"} : {minWidth: "400px", backgroundColor: "#0f0f0f"}}
     >
-        <div className={`markdown-content transition duration-300 ease-in-out ${
-            postId !== null ? 'm-3 ml-3 mr-5 translate-x-0' : '-translate-x-full w-0 overflow-hidden'
-            }`}
-            style={{width:"700px"}}
-            >
+        <div className={`markdown-content`}
+        >
+
+  <button
+    className="mt-4 rounded text-3xl text-blue-500"
+    onClick={toggleFocusMode}
+  >{focusedMode ? (<AudioOutlined />) : (<AudioMutedOutlined />) }</button>
 
             <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}
               components={{img:({node,...props})=><img style={{maxWidth:'100%'}}{...props}/>}}

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background: "#0f0f0f";
+}
 
 /* Chrome, Edge, and Safari */
 .scroll::-webkit-scrollbar {
@@ -22,7 +25,7 @@
 
 /* Change scrollbar colors on hover */
 .scroll:hover {
-  scrollbar-color: #0080ff #fff; /* Change to secondary color on hover */
+  scrollbar-color: #0080ff #0f0f0f; /* Change to secondary color on hover */
 }
 
 .scroll:hover::-webkit-scrollbar-thumb {
@@ -32,7 +35,7 @@
 
 /*
     */
-#scroller {
+#sroller {
     background-image: url("/images/xl3.jpg");
     background-size: cover;
     background-repeat: no-repeat;

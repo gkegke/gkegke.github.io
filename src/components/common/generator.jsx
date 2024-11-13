@@ -115,7 +115,7 @@ const generate = useCallback(() => {
 
   return (<>
     <div 
-      className={`relative m-2 w-72 h-80 border-none overflow-hidden hover:bg-blue-500`}
+      className={`relative m-2 w-72 h-60 border-none overflow-hidden hover:bg-blue-500`}
       >
       <canvas className="rounded w-full h-full opacity-80" ref={canvas} /> {/* use canvas instead of div */}
         <Space
