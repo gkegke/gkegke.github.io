@@ -49,7 +49,7 @@ const togglePostButton = (postId) => {
   focusedMode ? 'opacity-0 w-10' : ''
 }`}>
   <Posts
-    postList={postList.reverse()}
+    postList={postList}
     selectedPostId={selectedPostId}
     togglePostButton={togglePostButton}
   />
