@@ -8,8 +8,7 @@ export default function Posts({ postList, getPost, selectedPostId, togglePostBut
 
   return (
     <div
-      className={`flex flex-wrap justify-center items-start gap-2 pt-8`}
-      style={{minWidth: "300px"}}
+      id="posts"
     >
 
             <Generator />
@@ -38,7 +37,7 @@ function PostButton({ post, selected, togglePostButton }) {
 
   return (
     <button
-      className={`text-white drop-shadow w-80 h-80 overflow-hidden ${
+      className={`text-white drop-shadow w-40 h-80 overflow-hidden ${
         selected ?
         'text-underline' :
         'opacity-70'}`

@@ -41,11 +41,12 @@ const togglePostButton = (postId) => {
 
   return (
     <div
-      className={`flex justify-start items-start w-full`}
+      className={`flex justify-start items-start w-fit min-w-full`}
       style={{backgroundColor: "#0f0f0f"}}
     >
 
-<div className={`ease ${
+<div
+  className={`ease ${
   focusedMode ? 'opacity-0 w-10' : ''
 }`}>
   <Posts
@@ -53,15 +54,14 @@ const togglePostButton = (postId) => {
     selectedPostId={selectedPostId}
     togglePostButton={togglePostButton}
   />
+
 </div>
 
-<div className="">
   <Post
     postId={selectedPostId}
     focusedMode={focusedMode}
     toggleFocusMode={() => setFocusedMode(!focusedMode)}
   />
-</div>
 
     </div>
   );

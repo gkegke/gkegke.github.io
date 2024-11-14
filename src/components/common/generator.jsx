@@ -19,6 +19,9 @@ function bisectLeft(arr, value, lo = 0, hi = arr.length) {
 }
 
 export default function Generator() {
+
+  /*
+
   const canvas = useRef();
   const [context, setContext] = useState(null);
   const [lastGenerated, setLastGenerated] = useState(null);
@@ -48,11 +51,11 @@ const generate = useCallback(() => {
     const c = _colors[cindex];
 
     // draw the text on the canvas
-    context.font = "23px Verdana bold"; // adjust the font size and family
+    context.font = "25px Verdana bold"; // adjust the font size and family
     context.fillStyle = c;
     context.fillText(s, currentX, currentY); // adjust the position and alignment
 
-    currentX += 20; // increment the x-coordinate by the character width
+    currentX += 10; // increment the x-coordinate by the character width
 
       // check if the x-coordinate exceeds the canvas width
       if (currentX + 20 > canvas.current.width) {
@@ -112,12 +115,13 @@ const generate = useCallback(() => {
     };
   }, [context, generate, lastGenerated]); // add context as a dependency
 
+  */
 
   return (<>
     <div 
-      className={`relative m-2 w-72 h-60 border-none overflow-hidden hover:bg-blue-500`}
+      className={`relative w-40 h-60 border-none overflow-hidden`}
       >
-      <canvas className="rounded w-full h-full opacity-80" ref={canvas} /> {/* use canvas instead of div */}
+      {/*<canvas className="rounded w-full h-full opacity-80" ref={canvas} /> use canvas instead of div */}
         <Space
           className="absolute top-5 left-5"
         >
@@ -133,7 +137,7 @@ const generate = useCallback(() => {
       <Space
        className="absolute bottom-5 left-5 text-white justify-start items-start flex flex-col"
       >
-        <div className="text-5xl font-bold">
+        <div className="text-2xl font-bold">
           __ gkegke
         </div>
         <div className="flex justify-start text-left">

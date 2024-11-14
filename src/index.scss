@@ -6,75 +6,21 @@ body {
   background: "#0f0f0f";
 }
 
-/* Chrome, Edge, and Safari */
-.scroll::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-  background: #fff;
+#posts {
+  min-width: 10rem;
+  display: grid;
+  grid-template-columns: 1;
+  gap: 0.5rem; /* 0.5rem = 8px */
+  margin: 0.5rem; /* 0.5rem = 8px */
+  margin-top: 2rem; /* 2rem = 32px */
+  margin-bottom: 2rem;
 }
 
-.scroll::-webkit-scrollbar-track {
-  background: #fff;
-  border-radius: 2px;
-}
+@media (min-width: 500px) {
 
-.scroll::-webkit-scrollbar-thumb {
-  background-color: #fff;
-  border-radius: 2px;
-}
-
-/* Change scrollbar colors on hover */
-.scroll:hover {
-  scrollbar-color: #0080ff #0f0f0f; /* Change to secondary color on hover */
-}
-
-.scroll:hover::-webkit-scrollbar-thumb {
-  background-color: #0080ff;
-  border-radius: 2px;
-}
-
-/*
-    */
-#sroller {
-    background-image: url("/images/xl3.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    pointer-events: none;
-    position: fixed;
-    top: -10vw;
-    left: -10vw;
-    width: 150vw;
-    height: 250vh;
-}
-
-#postToggle {
-  visibility:hidden;
-}
-
-@media (min-width: 900px) {
-    #scroller {
-        background-size: cover;
-    }
-
-    #postToggle {
-      visibility: visible;
-    }
-}
-
-@keyframes scroll {
-  0% {
-    transform: translateY(0) rotate(-2deg);
+  #posts {
+    width: 20rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  to {
-    transform: translateY(-20%) rotate(-10deg);
-  }
-}
 
-.animate-scrolling-image {
-  animation: scroll 30s linear infinite;
-
-}
-
-.vertical-text {
-  writing-mode: vertical-rl; /* or vertical-lr */
 }
