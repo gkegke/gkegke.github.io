@@ -11,8 +11,6 @@ export default function Posts({ postList, getPost, selectedPostId, togglePostBut
       id="posts"
     >
 
-            <Generator />
-
       {postList.map((post, i) => (
               <PostButton
                   key={`post:${i}`}
