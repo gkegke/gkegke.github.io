@@ -9,6 +9,7 @@ export default function Posts({ postList, getPost, selectedPostId, togglePostBut
   return (
     <div
       id="posts"
+      className="w-screen flex overflow-x-scroll overflow-y-hidden mb-8"
     >
 
       {postList.map((post, i) => (
@@ -20,7 +21,11 @@ export default function Posts({ postList, getPost, selectedPostId, togglePostBut
                   togglePostButton={togglePostButton}
               />
           )
+
+
         )}
+
+          <Generator />
 
     </div>
   );
@@ -35,15 +40,19 @@ function PostButton({ post, selected, togglePostButton }) {
 
   return (
     <button
-      className={`text-white drop-shadow w-40 h-80 overflow-hidden ${
-        selected ?
-        'text-underline' :
-        'opacity-70'}`
-      }
+      className={`relative text-white overflow-hidden ${
+        selected ? '' : 'opacity-70'
+      } ${
+        post.id % 2 === 0 ? 'text-white' : 'text-white'
+      }`}
+      style={{minWidth: "175px", maxWidth: "175px", height: "400px"}}
       onClick={handleClick}
-    >
-      <div className="flex p-1 text-base md:text-lg font-bold">{post.title}</div>
-      <div className="flex justify-center items-center">{post.date}</div>
+    > 
+      <div className="absolute left-2 bottom-2 bg-gray700 text-white opacity-70 px-2 rounded flex items-center">
+        {post.id} 
+        <div className="ml-1 text-sm flex justify-center items-center">{post.date}</div>
+      </div>
+      <div className="text-white rounded flex m-1 p-1 text-base font-bold">{post.title}</div>
       <WordCloud words={post.keywords.slice(0, 10)} maxFontSize={25} />
     </button>
   );

@@ -14,7 +14,7 @@ import {
   GithubOutlined,
 } from '@ant-design/icons';
 
-export default function Post({ postId, focusedMode, toggleFocusMode }) {
+export default function Post({ postId }) {
 
     const [mdText, setMDText] = useState("");
 
@@ -40,17 +40,15 @@ export default function Post({ postId, focusedMode, toggleFocusMode }) {
   return <img {...props} style={{maxWidth: '90%'}} />
 }
 
-  return (<div className={`px-4 text-gray-100 shadow drop-shadow flex flex-col `}
-    style={focusedMode ? {minWidth: "300px", maxWidth: "800px", backgroundColor: "#0f0f0f"} : {minWidth: "400px", backgroundColor: "#0f0f0f"}}
+  return (
+  
+<div className="flex justify-center w-full"
+>
+  <div className={`px-4  text-gray-100 shaow dop-shadow flex flex-col`}
+    style={{maxWidth:"800px"}}
     >
 
 <div className="flex gap-2 mt-4">
-
-  <button
-    className="rounded text-3xl text-blue-500"
-    onClick={toggleFocusMode}
-  >{focusedMode ? (<AudioOutlined />) : (<AudioMutedOutlined />) }</button>
-
 
     <div 
       className={`flex gap-2 items-center`}
@@ -84,6 +82,8 @@ export default function Post({ postId, focusedMode, toggleFocusMode }) {
 
             </div>
 
-    </div>)
+    </div></div>
+    
+    )
 
 }

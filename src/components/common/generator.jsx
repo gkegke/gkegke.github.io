@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useContext, useState, useEffect, useCallback } from "react";
 
 import { Space, Tooltip } from 'antd';
 
@@ -19,8 +19,6 @@ function bisectLeft(arr, value, lo = 0, hi = arr.length) {
 }
 
 export default function Generator() {
-
-  /*
 
   const canvas = useRef();
   const [context, setContext] = useState(null);
@@ -115,33 +113,17 @@ const generate = useCallback(() => {
     };
   }, [context, generate, lastGenerated]); // add context as a dependency
 
-  */
-
   return (<>
     <div 
-      className={`relative w-40 h-60 border-none overflow-hidden`}
+      className={`relative border-none overflow-hidden`}
+      style={{height: "400px", minWidth: "500px", maxWidth: "500px"}}
       >
-      {/*<canvas className="rounded w-full h-full opacity-80" ref={canvas} /> use canvas instead of div */}
-        <Space
-          className="absolute top-5 left-5"
-        >
-        <Tooltip title="checkout my github">
-          <a
-            href="https://github.com/gkegke"
-            className="hover:bg-blue-500 p-2"
-          >
-          <GithubOutlined className="text-white text-4xl" />
-        </a>
-        </Tooltip>
-  </Space>
-      <Space
+      <canvas className="rounded w-full h-full opacity-80" ref={canvas} /> 
+     <Space
        className="absolute bottom-5 left-5 text-white justify-start items-start flex flex-col"
       >
         <div className="text-2xl font-bold">
           __ gkegke
-        </div>
-        <div className="flex justify-start text-left">
-          just some random thoughts
         </div>
       </Space>
     </div>

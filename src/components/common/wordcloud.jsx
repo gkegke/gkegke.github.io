@@ -84,7 +84,7 @@ const WordCloud = ({ words, maxFontSize = 25 }) => {
         <div
           key={index}
           className={` ${
-            isHovered && 'bg-black text-white'
+            isHovered && 'bg-white text-black'
           }`}
           style={listItemStyle(index)}
           onMouseEnter={handleMouseEnter}

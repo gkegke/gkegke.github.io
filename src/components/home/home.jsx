@@ -7,7 +7,6 @@ export default function Home() {
 
   const [postList, setPostList] = useState([]);
   const [selectedPostId, setSelectedPostId] = useState(8);
-  const [focusedMode, setFocusedMode] = useState(false);
 
 const togglePostButton = (postId) => {
     if (selectedPostId !== postId) {
@@ -41,26 +40,20 @@ const togglePostButton = (postId) => {
 
   return (
     <div
-      className={`flex justify-start items-start w-fit min-w-full`}
+      id="content"
+      className={`flex flex-col justify-start items-start w-fit min-w-full`}
       style={{backgroundColor: "#0f0f0f"}}
     >
 
-<div
-  className={`ease ${
-  focusedMode ? 'opacity-0 w-10' : ''
-}`}>
   <Posts
     postList={postList}
     selectedPostId={selectedPostId}
     togglePostButton={togglePostButton}
   />
 
-</div>
 
   <Post
     postId={selectedPostId}
-    focusedMode={focusedMode}
-    toggleFocusMode={() => setFocusedMode(!focusedMode)}
   />
 
     </div>
