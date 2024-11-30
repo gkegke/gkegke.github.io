@@ -1,10 +1,6 @@
-import React, { useRef, useContext, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 
 import { Space, Tooltip } from 'antd';
-
-import {
-  GithubOutlined,
-} from '@ant-design/icons';
 
 function bisectLeft(arr, value, lo = 0, hi = arr.length) {
   while (lo < hi) {
@@ -21,10 +17,13 @@ function bisectLeft(arr, value, lo = 0, hi = arr.length) {
 export default function Generator() {
 
   const canvas = useRef();
+  const generatorRef = useRef();
   const [context, setContext] = useState(null);
   const [lastGenerated, setLastGenerated] = useState(null);
 
 const generate = useCallback(() => {
+  if (!context) return;
+
   const _char_thresholds = [0.005, 0.3, 0.4, 0.5, 1];
   const _chars = ["♪", "、", "ヽ", "｀", " "];
   const _color_thresholds = [0.05, 0.15, 0.3, 0.5, 1];
@@ -32,9 +31,10 @@ const generate = useCallback(() => {
 
   // clear the previous content
   context.clearRect(0, 0, canvas.current.width, canvas.current.height);
+  console.log(canvas.current.width)
 
   const n = 20 * 20; // adjust the number of characters based on font size
-  const lineHeight = 20; // adjust the desired line height
+  const lineHeight = 25; // adjust the desired line height
 
   let currentX = 0;
   let currentY = 0;
@@ -49,7 +49,7 @@ const generate = useCallback(() => {
     const c = _colors[cindex];
 
     // draw the text on the canvas
-    context.font = "25px Verdana bold"; // adjust the font size and family
+    context.font = "25px Verdana"; // adjust the font size and family
     context.fillStyle = c;
     context.fillText(s, currentX, currentY); // adjust the position and alignment
 
@@ -67,15 +67,15 @@ const generate = useCallback(() => {
     const canvasEle = canvas.current;
     if (canvasEle) {
       const ctx = canvasEle.getContext("2d");
-      canvasEle.width = canvas.current.width;
-      canvasEle.height = canvas.current.height;
+      canvasEle.width = canvasEle.width;
+      canvasEle.height = canvasEle.height;
       if (ctx) {
         setContext(ctx);
       } else {
         console.error("Failed to get context.");
       }
     }
-  }, [canvas]);
+  }, []);
 
   useEffect(() => {
     let requestId = null;
@@ -84,19 +84,19 @@ const generate = useCallback(() => {
 
       if (context !== null) {
   
+        generate();
         // Check the difference between the current time and the lastGenerated time
-        let diff = Date.now() - lastGenerated;
+        //let diff = Date.now() - lastGenerated;
   
         // If the difference is greater than or equal to 2000 milliseconds, call generate
-        if (lastGenerated === null || diff >= 2000) {
-          generate();
-        } else {
-          console.log(`
-            request ID: ${requestId}
-            lastGenerated: ${lastGenerated}
-            diff: ${diff}
-          `);
-        }
+        //if (lastGenerated === null || diff >= 2000) {
+        //} else {
+        //  console.log(`
+        //    request ID: ${requestId}
+        //    lastGenerated: ${lastGenerated}
+        //    diff: ${diff}
+        //  `);
+        //}
 
       }
 
@@ -112,13 +112,36 @@ const generate = useCallback(() => {
       cancelAnimationFrame(requestId);
     };
   }, [context, generate, lastGenerated]); // add context as a dependency
+  
+    useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.innerWidth <= 500;
+      const generator = generatorRef.current;
+
+      if (generator) {
+        generator.style.minWidth = isMobile ? "200px" : "500px";
+        generator.style.maxWidth = isMobile ? "200px" : "500px";
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initialize on mount
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (<>
     <div 
-      className={`relative border-none overflow-hidden`}
-      style={{height: "400px", minWidth: "500px", maxWidth: "500px"}}
+      id="generator"
+      ref={generatorRef}
+      className={`relative overflow-hidden`}
+      style={{height:"400px", minWidth: "500px"}}
       >
-      <canvas className="rounded w-full h-full opacity-80" ref={canvas} /> 
+      <canvas ref={canvas} 
+        style={{height: "400px", width: "500px"}}
+      /> 
      <Space
        className="absolute bottom-5 left-5 text-white justify-start items-start flex flex-col"
       >
