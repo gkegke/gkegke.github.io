@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "title": "1. Getting Einstein to teach you General Relativity - AI in Education",
+    "title": "Getting Einstein to teach you General Relativity - AI in Education",
     "date" : "25th March 2023",
     "keywords": [
       {
@@ -60,7 +60,7 @@
   },
   {
     "id": 2,
-    "title": "2. AI generating data for other AI - what you might be discounting",
+    "title": "AI generating data for other AI - what you might be discounting",
     "date" : "4th April 2023",
     "keywords": [
         { "text": "AI", "weight": 10 },
@@ -83,7 +83,7 @@
   },
   {
     "id": 3,
-    "title": "3.  Ripping off their own wings, Loss aversion and why big businesses suck at pivoting",
+    "title": "Ripping off their own wings, Loss aversion and why big businesses suck at pivoting",
     "date" : "19th April 2023",
     "keywords": [
         {"text": "Loss aversion", "weight": 9},
@@ -105,7 +105,7 @@
   },
   {
     "id": 4,
-    "title": "4. Exponential technologies that 'jump' into existence, bottleneck thinking, cross pollination, and why cities will never die(?)",
+    "title": "Exponential technologies that 'jump' into existence, bottleneck thinking, cross pollination, and why cities will never die(?)",
     "date" : "5th May 2023",
     "keywords": [
     {"text": "cross pollination", "weight" : 3 },
@@ -124,7 +124,7 @@
   },
   {
     "id": 5,
-    "title": "5. Why copyright might finally be on it's way out in the age of AI",
+    "title": "Why copyright might finally be on it's way out in the age of AI",
     "date" : "6th June 2023",
     "keywords": [
         { "text": "AI", "weight": 10 },
@@ -147,7 +147,7 @@
   },
   {
     "id": 6,
-    "title": "6. Yes. Inequality leads to bottlenecks. Yes. Inequality kills GDP (simplified)",
+    "title": "Yes. Inequality leads to bottlenecks. Yes. Inequality kills GDP (simplified)",
     "date" : "7th Oct 2023",
   "keywords": [
     { "text": "inequality", "weight": 10 },
@@ -167,7 +167,7 @@
 },
   {
     "id": 7,
-    "title": "7. Horizontal scaling and Vertical scaling in game development",
+    "title": "Horizontal scaling and Vertical scaling in game development",
     "date" : "15th Feb 2024",
   "keywords": [
 { "text": "game development", "weight": 10 },
@@ -189,7 +189,7 @@
 },
   {
     "id": 8,
-    "title": "8. How important is human capital in AI (a Nvidia hit piece?)",
+    "title": "How important is human capital in AI (a Nvidia hit piece?)",
     "date" : "8th Mar 2024",
 "keywords": [
     { "text": "human capital", "weight": 10 },
