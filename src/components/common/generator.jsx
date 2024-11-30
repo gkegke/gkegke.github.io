@@ -34,7 +34,7 @@ const generate = useCallback(() => {
   console.log(canvas.current.width)
 
   const n = 20 * 20; // adjust the number of characters based on font size
-  const lineHeight = 25; // adjust the desired line height
+  const lineHeight = 15; // adjust the desired line height
 
   let currentX = 0;
   let currentY = 0;
@@ -137,10 +137,10 @@ const generate = useCallback(() => {
       id="generator"
       ref={generatorRef}
       className={`relative overflow-hidden`}
-      style={{height:"400px", minWidth: "500px"}}
+      style={{height:"390px", minWidth: "500px"}}
       >
       <canvas ref={canvas} 
-        style={{height: "400px", width: "500px"}}
+        style={{height: "390px", width: "500px"}}
       /> 
      <Space
        className="absolute bottom-5 left-5 text-white justify-start items-start flex flex-col"

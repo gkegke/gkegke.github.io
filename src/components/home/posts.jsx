@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 
+import FadeInSection from '../common/fadeInSection.jsx';
 import Generator from '../common/generator.jsx';
 import WordCloud from '../common/wordcloud.jsx';
 
@@ -15,15 +16,17 @@ export default function Posts({ postList, getPost, selectedPostId, togglePostBut
           <Generator />
 
       {postList.map((post, i) => (
-              <PostButton
+        <FadeInSection
                   key={`post:${i}`}
+        >
+              <PostButton
                   post={post}
                   getPost={() => getPost(post.id)}
                   selected={post.id === selectedPostId}
                   togglePostButton={togglePostButton}
               />
+</FadeInSection>
           )
-
 
         )}
 

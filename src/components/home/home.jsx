@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 
+import FadeInSection from './../common/fadeInSection.jsx';
 import Posts from './posts.jsx';
 import Post from './post.jsx';
 
@@ -51,10 +52,11 @@ const togglePostButton = (postId) => {
     togglePostButton={togglePostButton}
   />
 
-
+<FadeInSection>
   <Post
     postId={selectedPostId}
   />
+</FadeInSection>
 
     </div>
   );
