@@ -44,33 +44,9 @@ export default function Post({ postId }) {
   
 <div className="flex justify-center w-full"
 >
-  <div className={`px-4  text-gray-100 shaow dop-shadow flex flex-col`}
+  <div className={`px-4 text-gray-100 shaow dop-shadow flex flex-col`}
     style={{maxWidth:"800px"}}
     >
-
-<div className="flex gap-2 mt-4">
-
-    <div 
-      className={`flex gap-2 items-center`}
-      >
-        <Tooltip title="checkout my github">
-          <a
-            href="https://github.com/gkegke"
-            className="hover:bg-blue-500 p-2"
-          >
-          <GithubOutlined className="text-white text-4xl" />
-        </a>
-        </Tooltip>
-        <div className="text-nowrap text-2xl font-bold">
-          __ gkegke
-          
-        <div className="text-sm">
-          just some random thoughts
-        </div>
-        </div>
-    </div>
-</div>
-
         <div className={`markdown-content`}
         >
 
