@@ -101,7 +101,7 @@ function TopLeft() {
       style={{height:"400px"}}
       >
      <div
-       className="absolute bottom-0 left-2 text-white justify-start items-start flex flex-col"
+       className="absolute bottom-2 left-2 text-white justify-start items-start flex flex-col"
       >
     <div 
       className={`flex gap-2 items-center`}
