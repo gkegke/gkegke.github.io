@@ -6,6 +6,8 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw'
 
+import FadeInSection from './../common/fadeInSection.jsx';
+
 import '../common/markdown.css';
 
 import {
@@ -42,11 +44,12 @@ export default function Post({ postId }) {
 
   return (
   
-<div className="flex justify-center w-full"
+<div className="flex justify-center w-full boder border-ed-500"
 >
-  <div className={`px-4 text-gray-100 shaow dop-shadow flex flex-col`}
+  <div className={`borer px-4 text-gray-100 shaow dop-shadow flex flex-col justify-center items-center`}
     style={{maxWidth:"800px"}}
     >
+<FadeInSection>
         <div className={`markdown-content`}
         >
 
@@ -58,6 +61,7 @@ export default function Post({ postId }) {
 
             </div>
 
+</FadeInSection>
     </div></div>
     
     )

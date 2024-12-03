@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 
-import FadeInSection from './../common/fadeInSection.jsx';
 import Posts from './posts.jsx';
 import Post from './post.jsx';
 
@@ -42,7 +41,7 @@ const togglePostButton = (postId) => {
   return (
     <div
       id="content"
-      className={`flex flex-col justify-start items-start w-fit min-w-full`}
+      className={`flex flex-col justify-start items-start w-full scroll`}
       style={{backgroundColor: "#0f0f0f"}}
     >
 
@@ -52,11 +51,9 @@ const togglePostButton = (postId) => {
     togglePostButton={togglePostButton}
   />
 
-<FadeInSection>
   <Post
     postId={selectedPostId}
   />
-</FadeInSection>
 
     </div>
   );
