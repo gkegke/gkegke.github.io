@@ -1,5 +1,5 @@
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
 
 import { Space, Tooltip } from 'antd';
 
@@ -14,115 +14,161 @@ import WordCloud from '../common/wordcloud.jsx';
 
 export default function Posts({ postList, getPost, selectedPostId, togglePostButton }) {
 
+  const containerRef = useRef(null);
+  const [positions, setPositions] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(null);
+  const animationFrameRef = useRef(null);
+  const lastUpdateTimeRef = useRef(Date.now());
+
+  const years = useMemo(() => {
+    // Extract unique years from post dates
+    const yearsSet = new Set(postList.map(post => Number(post.date.split(" ").at(-1))));
+    return Array.from(yearsSet).sort((a, b) => b - a); // Sort years descending
+  }, [postList]);
+
+  useEffect(() => {
+    setSelectedYear(years.at(0))
+  }, [postList, years])
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const containerWidth = container.offsetWidth * (3 / 4);
+    const containerHeight = 200;
+
+    const initialPositions = postList.map((_, index) => ({
+      x: Math.random() * containerWidth,
+      y: Math.random() * containerHeight,
+      dx: Math.max((Math.random() - 0.5) * 4, 0.25),
+      dy: Math.max((Math.random() - 0.5) * 4, 0.25),
+    }));
+
+
+    setPositions(initialPositions);
+
+    animationFrameRef.current = requestAnimationFrame(updatePositions);
+
+    return () => cancelAnimationFrame(animationFrameRef.current);
+  }, [postList]);
+
+  const updatePositions = () => {
+    const now = Date.now();
+    const elapsed = now - lastUpdateTimeRef.current;
+
+    if (elapsed >= 20) {
+      setPositions((prevPositions) =>
+        prevPositions.map(({ x, y, dx, dy }) => {
+          const containerWidth = containerRef.current.offsetWidth * 0.85;
+          const containerHeight = 300;
+
+          let newX = x + dx;
+          let newY = y + dy;
+
+          if (newX < 0 || newX > containerWidth) dx *= -1;
+          if (newY < 0 || newY > containerHeight * 0.5) dy *= -1;
+
+          //console.log(containerWidth, newX, newY)
+
+          return { x: newX, y: newY, dx, dy };
+        })
+      );
+      lastUpdateTimeRef.current = now;
+    }
+
+    animationFrameRef.current = requestAnimationFrame(updatePositions);
+  };
+
+  const filterPostsByYear = (year) => {
+    setVisiblePosts(postList.filter(post => Number(post.date.split(" ").at(-1)) === year));
+  };
+
+  const listItemStyle = (index) => {
+    const { x, y } = positions[index] || { x: 0, y: 0 };
+    return {
+      position: "absolute",
+      top: `${y}px`,
+      left: `${x}px`,
+      minWidth: "175px",
+      maxWidth: "175px",
+      height: "300px",
+    };
+  };
+
   return (
     <div
-      id="posts"
-      className="w-screen flex overflow-x-scroll overflow-y-hidden "
+      ref={containerRef}
+      className="relative w-full overflow-hidden"
+      style={{ minHeight: "500px" }}
     >
+      <TopLeft />
+      <div className="absolute top-20 left-2 flex gap-2">
+       {years.map(year => (
+          <button
+            key={`year-${year}`}
+            className={`text-white px-2 py-1 rounded hover:bg-gray-500 ${
+              year === selectedYear ? 'bg-blue-500' : 'bg-gray-700 '
+            }`}
+            onClick={() => setSelectedYear(year)}
+          >
+            {year} ({postList.filter(post => Number(post.date.split(" ").at(-1)) === year).length})
+          </button>
+        ))}
+      </div>
+      {postList.filter(post => Number(post.date.split(" ").at(-1)) === selectedYear).map((post, i) => (
+        <FadeInSection key={`post:${i}`}>
+          <div style={listItemStyle(i)}>
+            <PostButton
+              post={post}
+              getPost={() => getPost(post.id)}
+              selected={post.id === selectedPostId}
+              togglePostButton={togglePostButton}
+            />
+          </div>
+        </FadeInSection>
+      ))}
+    </div>
+  );
+}
 
-          <TopLeft />
-
-      {postList.map((post, i) => (
-        <FadeInSection
-                  key={`post:${i}`}
-        >
-              <PostButton
-                  post={post}
-                  getPost={() => getPost(post.id)}
-                  selected={post.id === selectedPostId}
-                  togglePostButton={togglePostButton}
-              />
-</FadeInSection>
-          )
-
-        )}
-
-
+function TopLeft() {
+  return (
+    <div
+      className="absolute top-4 left-2 text-white justify-start items-start flex flex-col"
+    >
+      <div className="flex gap-2 items-center">
+        <Tooltip title="checkout my github">
+          <a href="https://github.com/gkegke" className="hover:bg-blue-500 p-2">
+            <GithubOutlined className="text-white text-4xl" />
+          </a>
+        </Tooltip>
+        <div className="text-nowrap text-2xl font-bold">
+          __ gkegke
+          <div className="text-sm text-wrap">just some random thoughts</div>
+        </div>
+      </div>
     </div>
   );
 }
 
 function PostButton({ post, selected, togglePostButton }) {
-
-    const handleClick = () => {
+  const handleClick = () => {
     togglePostButton(post.id);
-
   };
+
+  const memoizedWords = useMemo(() => post.keywords.slice(0, 10), [post.keywords]);
 
   return (
     <button
-      className={`relative text-white overflow-hidden ${
-        selected ? '' : 'opacity-70'
-      } ${
-        post.id % 2 === 0 ? 'text-white' : 'text-white'
-      }`}
-      style={{minWidth: "175px", maxWidth: "175px", height: "400px"}}
+      className={`relative text-white ${selected ? '' : 'opacity-70'}`}
+      style={{ minWidth: "175px", maxWidth: "175px", height: "300px" }}
       onClick={handleClick}
-    > 
-      <div className="absolute left-2 bottom-2 text-white opacity-70 px-2 rounded items-center">
-        <div className="text-white rounded flex m-1 p-1 text-base font-bold">
-          {post.id} : {post.title}
-        </div>
+    >
+      <div className="z-50 absolute left-2 bottom-2 text-white px-2 rounded items-center">
         <div className="ml-1 text-sm flex justify-center items-center">{post.date}</div>
+        <div className="text-white rounded flex m-1 p-1 text-base font-bold">
+          {post.title}
+        </div>
       </div>
-      <WordCloud words={post.keywords.slice(0, 10)} maxFontSize={25} />
+      <WordCloud words={memoizedWords} maxFontSize={25} />
     </button>
   );
-}
-
-function TopLeft() {
-
-  const generatorRef = useRef();
- 
-    useEffect(() => {
-    const handleResize = () => {
-      const isMobile = window.innerWidth <= 500;
-      const generator = generatorRef.current;
-
-      if (generator) {
-        generator.style.minWidth = isMobile ? "200px" : "350px";
-        generator.style.maxWidth = isMobile ? "200px" : "350px";
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Initialize on mount
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  return (<>
-    <div 
-      id="generator"
-      ref={generatorRef}
-      className={`relative overflow-hidden`}
-      style={{height:"400px"}}
-      >
-     <div
-       className="absolute bottom-2 left-2 text-white justify-start items-start flex flex-col"
-      >
-    <div 
-      className={`flex gap-2 items-center`}
-      >
-        <Tooltip title="checkout my github">
-          <a
-            href="https://github.com/gkegke"
-            className="hover:bg-blue-500 p-2"
-          >
-          <GithubOutlined className="text-white text-4xl" />
-        </a>
-        </Tooltip>
-        <div className="text-nowrap text-2xl font-bold">
-          __ gkegke
-          
-        <div className="text-sm text-wrap">
-          just some random thoughts
-        </div>
-        </div>
-      </div>
-      </div>
-    </div>
-  </>);
 }

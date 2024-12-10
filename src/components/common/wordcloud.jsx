@@ -1,11 +1,12 @@
 
-import { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
-const WordCloud = ({ words, maxFontSize = 25 }) => {
+const WordCloud = React.memo(({ words, maxFontSize = 25 }) => {
   const containerRef = useRef(null);
   const [positions, setPositions] = useState([]);
   const [isHovered, setIsHovered] = useState(false);
   const animationFrameRef = useRef(null);
+  const lastUpdateTimeRef = useRef(Date.now());
 
   useEffect(() => {
     const container = containerRef.current;
@@ -28,29 +29,29 @@ const WordCloud = ({ words, maxFontSize = 25 }) => {
   }, [words]);
 
   const updatePositions = () => {
-    if (!isHovered) {
-      setPositions(prevPositions =>
-        prevPositions.map(position => {
-          let { x, y, dx, dy } = position;
-          x += dx;
-          y += dy;
+    const now = Date.now();
+    const elapsed = now - lastUpdateTimeRef.current;
 
+    if (!isHovered && elapsed >= 10) {
+      setPositions((prevPositions) =>
+        prevPositions.map(({ x, y, dx, dy }) => {
           const containerWidth = containerRef.current.offsetWidth;
           const containerHeight = containerRef.current.offsetHeight;
 
-          if (x < 0 || x > containerWidth) {
-            dx *= -1;
-          }
-          if (y < 0 || y > containerHeight) {
-            dy *= -1;
-          }
+          let newX = x + dx;
+          let newY = y + dy;
 
-          return { ...position, x, y, dx, dy };
+          if (newX < 0 || newX > containerWidth) dx *= -1;
+          if (newY < 0 || newY > containerHeight) dy *= -1;
+
+          return { x: newX, y: newY, dx, dy };
         })
       );
 
-      animationFrameRef.current = requestAnimationFrame(updatePositions);
+      lastUpdateTimeRef.current = now;
     }
+
+    animationFrameRef.current = requestAnimationFrame(updatePositions);
   };
 
   const handleMouseEnter = () => {
@@ -61,7 +62,7 @@ const WordCloud = ({ words, maxFontSize = 25 }) => {
     setIsHovered(false);
   };
 
-  const listItemStyle = index => {
+  const listItemStyle = (index) => {
     const { x, y } = positions[index] || { x: 0, y: 0 };
     const minSize = 10;
     const maxSize = maxFontSize;
@@ -79,22 +80,20 @@ const WordCloud = ({ words, maxFontSize = 25 }) => {
   };
 
   return (
-    <div className="flex justify-center relative w-full h-full" ref={containerRef}>
-      {words.map(({ text }, index) =>
+    <div className="relative w-full h-full text-gray-200" ref={containerRef}>
+      {words.map(({ text }, index) => (
         <div
           key={index}
-          className={` ${
-            isHovered && 'bg-white text-black'
-          }`}
+          className={`${isHovered && 'bg-white text-black'}`}
           style={listItemStyle(index)}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
           {text}
         </div>
-      )}
+      ))}
     </div>
   );
-};
+});
 
 export default WordCloud;
