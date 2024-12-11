@@ -214,6 +214,40 @@
     { "text": "Nvidia", "weight": 3 }
 ]
 
+},
+  {
+    "id": 9,
+    "title": "4 dimensions of compounding growth in AI",
+    "date" : "8th Dec 2024",
+  "keywords": [
+    { "text": "AI models", "weight": 10 },
+    { "text": "pretraining", "weight": 9 },
+    { "text": "multi-modal training", "weight": 9 },
+    { "text": "synthetic data", "weight": 8 },
+    { "text": "self-supervised learning", "weight": 8 },
+    { "text": "reinforcement learning", "weight": 9 },
+    { "text": "RLHF (Reinforcement Learning from Human Feedback)", "weight": 8 },
+    { "text": "hierarchical learning", "weight": 8 },
+    { "text": "continuous learning", "weight": 8 },
+    { "text": "reward engineering", "weight": 7 },
+    { "text": "inference-time scaling", "weight": 9 },
+    { "text": "external memory integration", "weight": 8 },
+    { "text": "iterative reasoning", "weight": 8 },
+    { "text": "context expansion", "weight": 8 },
+    { "text": "modular reasoning frameworks", "weight": 7 },
+    { "text": "compute", "weight": 10 },
+    { "text": "AI hardware", "weight": 9 },
+    { "text": "model compression", "weight": 8 },
+    { "text": "distributed training", "weight": 8 },
+    { "text": "algorithmic efficiency", "weight": 7 },
+    { "text": "cloud infrastructure", "weight": 7 },
+    { "text": "human brain", "weight": 7 },
+    { "text": "AGI (Artificial General Intelligence)", "weight": 9 },
+    { "text": "naysayers", "weight": 6 },
+    { "text": "growth dimensions", "weight": 8 },
+    { "text": "multiplicative improvement", "weight": 7 }
+  ]
+
 }
 
 ]
