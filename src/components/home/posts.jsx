@@ -115,7 +115,7 @@ export default function Posts({ postList, getPost, selectedPostId, togglePostBut
     <div
       ref={containerRef}
       className="relative w-full overflow-hidden"
-      style={{ minHeight: "500px" }}
+      style={{ minHeight: "450px" }}
     >
       <TopLeft />
       <div className="absolute top-20 left-2 flex gap-2">
@@ -151,6 +151,7 @@ function TopLeft() {
   return (
     <div
       className="absolute top-4 left-2 text-white justify-start items-start flex flex-col"
+      style={{zIndex: 9999}}
     >
       <div className="flex gap-2 items-center">
         <Tooltip title="checkout my github">
