@@ -38,8 +38,8 @@ export default function Posts({ postList, getPost, selectedPostId, togglePostBut
     const initialPositions = postList.map((_, index) => ({
       x: Math.random() * containerWidth,
       y: Math.random() * containerHeight,
-      dx: Math.max((Math.random() - 0.5) * 4, 0.25),
-      dy: Math.max((Math.random() - 0.5) * 4, 0.25),
+      dx: Math.max((Math.random() - 0.5) * 4, 0.1),
+      dy: Math.max((Math.random() - 0.5) * 4, 0.1),
     }));
 
 
@@ -50,32 +50,50 @@ export default function Posts({ postList, getPost, selectedPostId, togglePostBut
     return () => cancelAnimationFrame(animationFrameRef.current);
   }, [postList]);
 
-  const updatePositions = () => {
-    const now = Date.now();
-    const elapsed = now - lastUpdateTimeRef.current;
+ const updatePositions = () => {
+  const now = Date.now();
+  const elapsed = (now - lastUpdateTimeRef.current) / 1000; // Convert to seconds
 
-    if (elapsed >= 20) {
-      setPositions((prevPositions) =>
-        prevPositions.map(({ x, y, dx, dy }) => {
-          const containerWidth = containerRef.current.offsetWidth * 0.85;
-          const containerHeight = 300;
+  if (elapsed >= 0.02) { // Ensure updates occur at reasonable intervals
+    setPositions((prevPositions) =>
+      prevPositions.map(({ x, y, dx, dy }) => {
+        const containerWidth = containerRef.current.offsetWidth * 0.85;
+        const containerHeight = 300;
 
-          let newX = x + dx;
-          let newY = y + dy;
+        // Update positions using elapsed time for smooth motion
+        let newX = x + dx * elapsed * 60; // Scale by elapsed and 60fps factor
+        let newY = y + dy * elapsed * 60;
 
-          if (newX < 0 || newX > containerWidth) dx *= -1;
-          if (newY < 0 || newY > containerHeight * 0.5) dy *= -1;
+        // Reflect position when hitting boundaries
+        if (newX < 0) {
+          newX = 0;
+          dx *= -1;
+        }
+        if (newX > containerWidth) {
+          newX = containerWidth;
+          dx *= -1;
+        }
+        if (newY < 0) {
+          newY = 0;
+          dy *= -1;
+        }
+        if (newY > containerHeight * 0.5) {
+          newY = containerHeight * 0.5;
+          dy *= -1;
+        }
 
-          //console.log(containerWidth, newX, newY)
+        // Ensure minimum velocity to prevent jitter
+        dx = Math.sign(dx) * Math.max(Math.abs(dx), 0.1);
+        dy = Math.sign(dy) * Math.max(Math.abs(dy), 0.1);
 
-          return { x: newX, y: newY, dx, dy };
-        })
-      );
-      lastUpdateTimeRef.current = now;
-    }
+        return { x: newX, y: newY, dx, dy };
+      })
+    );
+    lastUpdateTimeRef.current = now;
+  }
 
-    animationFrameRef.current = requestAnimationFrame(updatePositions);
-  };
+  animationFrameRef.current = requestAnimationFrame(updatePositions);
+}; 
 
   const filterPostsByYear = (year) => {
     setVisiblePosts(postList.filter(post => Number(post.date.split(" ").at(-1)) === year));
