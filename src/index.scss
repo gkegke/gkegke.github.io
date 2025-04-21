@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, #4caf50, #2196f3);
+  height: 8px;
+  border-radius: 4px;
+}
+
+input[type="range"]::-moz-range-track {
+  background: linear-gradient(to right, #4caf50, #2196f3);
+  height: 8px;
+  border-radius: 4px;
+} 
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default appearance */
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white; /* Ensure the thumb is white */
+  border: 2px solid #4caf50; /* Optional: Add a border for better visibility */
+  cursor: pointer;
+  position: relative;
+  top: 50%; /* Adjust vertical alignment */
+  transform: translateY(-50%); /* Center the thumb vertically */
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white; /* Ensure the thumb is white */
+  border: 2px solid #4caf50; /* Optional: Add a border for better visibility */
+  cursor: pointer;
+}
+
+input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+
+
