@@ -94,7 +94,7 @@ function PostListSection({ postList, getPost, selectedPostId, togglePostButton }
           placeholder="Filter posts..."
           value={filterText}
           onChange={(e) => setFilterText(e.target.value)}
-          className="text-white bg-gray-800 px-2 py-1 rounded focus:outline-none focus:ring focus:ring-blue-500"
+          className="text-white bg-black px-2 py-1 rounded focus:outline-none focus:ring focus:ring-blue-500"
         />
       </div>
 

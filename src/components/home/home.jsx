@@ -38,6 +38,11 @@ const togglePostButton = (postId) => {
     }
   }, []);
 
+  // Find min and max postId from postList
+  const postIds = postList.map(p => p.id);
+  const minPostId = postIds.length ? Math.min(...postIds) : 1;
+  const maxPostId = postIds.length ? Math.max(...postIds) : 1;
+
   return (
     <div
       id="content"
@@ -45,15 +50,18 @@ const togglePostButton = (postId) => {
       style={{backgroundColor: "#0f0f0f"}}
     >
 
-  <Posts
-    postList={postList}
-    selectedPostId={selectedPostId}
-    togglePostButton={togglePostButton}
-  />
+      <Posts
+        postList={postList}
+        selectedPostId={selectedPostId}
+        togglePostButton={togglePostButton}
+      />
 
-  <Post
-    postId={selectedPostId}
-  />
+      <Post
+        postId={selectedPostId}
+        minPostId={minPostId}
+        maxPostId={maxPostId}
+        setSelectedPostId={setSelectedPostId}
+      />
 
     </div>
   );
