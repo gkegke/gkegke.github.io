@@ -21,7 +21,6 @@ const togglePostButton = (postId) => {
     const resp = await fetch('/posts.json');
     const data = await resp.json();
     setPostList(data.reverse());
-    //console.log("gotton posts", data);
   }
 
   useEffect(() => {
