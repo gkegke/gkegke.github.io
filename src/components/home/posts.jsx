@@ -1,11 +1,5 @@
 import { useRef, useState, useEffect, useMemo } from 'react';
 
-import { Tooltip } from 'antd';
-
-import {
-  GithubOutlined,
-} from '@ant-design/icons';
-
 import FadeInSection from '../common/fadeInSection.jsx';
 import WordCloud from '../common/wordcloud.jsx';
 
@@ -28,34 +22,12 @@ export default function Posts({ postList, getPost, selectedPostId, togglePostBut
       ref={containerRef}
       className="relative w-full overflow-hidden"
     >
-      <TopLeft />
       <PostListSection
         postList={filteredPostList}
         getPost={getPost}
         selectedPostId={selectedPostId}
         togglePostButton={togglePostButton}
       />
-    </div>
-  );
-}
-
-function TopLeft() {
-  return (
-    <div
-      className="absolute top-4 left-2 text-white justify-start items-start flex flex-col"
-      style={{zIndex: 9999}}
-    >
-      <div className="flex gap-2 items-center">
-        <Tooltip title="checkout my github">
-          <a href="https://github.com/gkegke" className="hover:bg-blue-500 p-2">
-            <GithubOutlined className="text-white text-4xl" />
-          </a>
-        </Tooltip>
-        <div className="text-nowrap text-2xl font-bold">
-          __ gkegke
-          <div className="text-sm text-wrap">just some random thoughts</div>
-        </div>
-      </div>
     </div>
   );
 }
