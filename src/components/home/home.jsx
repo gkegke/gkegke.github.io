@@ -4,6 +4,7 @@ import TopLeft from './topLeft.jsx';
 import Posts from './posts.jsx';
 import Post from './post.jsx';
 import Projects from './projects.jsx';
+import ReadingProgress from './ReadingProgress.jsx';
 
 export default function Home() {
   const [postList, setPostList] = useState([]);
@@ -50,6 +51,7 @@ export default function Home() {
       style={{ backgroundColor: "#0f0f0f" }}
     >
       <TopLeft mode={mode} setMode={setMode} />
+            {mode === 'blog' && <ReadingProgress />}
 
       {mode === 'blog' ? (
         <>

@@ -107,3 +107,8 @@ dist
 .history/
 
 build/
+
+.ctxctx.yaml
+.ctxctx_cache/
+prompt_input*
+cargs
