@@ -3,13 +3,13 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  root: 'src',
+  // Project root is now the default (where this config file is).
+  // 'public' directory is also found from the project root by default.
   build: {
-    outDir: '../dist',
+    // Output directory is 'dist' in the project root.
+    outDir: 'dist',
   },
-  publicDir: '../public',
-  base: './',
-  outDir: './',
+  base: './', // Important for relative paths in GitHub Pages deployment
   appType: 'spa',
   plugins: [
     VitePWA({
