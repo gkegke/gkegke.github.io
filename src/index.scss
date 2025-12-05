@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Font Optimization: Handled via Google Fonts in index.html for CDN caching and WOFF2 automatic selection */
+
+/* Apply font globally */
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
 .hide-scrollbar {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
@@ -11,9 +18,33 @@
   display: none; /* Chrome, Safari, and Opera */
 }
 
+/* FIX: Set html background to match body to prevent white box during mobile overscroll */
+html {
+  background-color: #0f0f0f;
+  /* Prevent horizontal scroll on mobile if elements slightly overflow */
+  overflow-x: hidden; 
+}
+
 body {
-  background: #0f0f0f;
-  color: #e1e1e1;
+  /* Deep, rich dark background with a subtle spotlight effect */
+  background-color: #0f0f0f;
+  background-image: radial-gradient(circle at 50% 0%, #1e1e24 0%, #0f0f0f 100%);
+  
+  background-attachment: fixed; /* Parallax-like feel */
+  color: #e4e4e7; /* Zinc-200 */
+  
+  /* Use dvh (dynamic viewport height) to account for mobile address bars */
+  min-height: 100dvh; 
+
+  /* 
+     Fix for mobile white background glitch: 
+     'background-attachment: fixed' requires expensive repaints on mobile during scroll.
+     When combined with a semi-transparent header, the background often disappears behind it.
+     We disable the fixed attachment on touch devices.
+  */
+  @media (hover: none) and (pointer: coarse) {
+    background-attachment: scroll;
+  }
 }
 
 /* Custom Range Slider Styles */
@@ -21,52 +52,55 @@ body {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 8px;
-  background: #2a2a2a;
+  height: 4px; /* Thinner track for elegance */
+  background: #3f3f46; /* Zinc-700 */
   border-radius: 5px;
   outline: none;
   opacity: 0.7;
-  transition: opacity 0.2s;
+  transition: all 0.2s;
   cursor: pointer;
 }
 
 .post-scroll-slider:hover {
   opacity: 1;
+  background: #52525b; /* Zinc-600 */
 }
 
 .post-scroll-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 16px; /* Slightly smaller */
+  height: 16px;
   background: #3b82f6;
   border-radius: 50%;
-  border: 2px solid #0f0f0f;
-  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
-  transition: background-color 0.2s, transform 0.2s;
+  border: 2px solid #18181b; /* Match dark bg */
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.8); /* Stronger glow */
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .post-scroll-slider:active::-webkit-slider-thumb {
-  transform: scale(1.1);
+  transform: scale(1.3);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 1);
 }
 
 .post-scroll-slider::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   background: #3b82f6;
   border-radius: 50%;
-  border: 2px solid #0f0f0f;
-  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
-  transition: background-color 0.2s, transform 0.2s;
+  border: 2px solid #18181b;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+  transition: transform 0.2s;
+  border: none;
 }
 
 .post-scroll-slider:active::-moz-range-thumb {
-  transform: scale(1.1);
+  transform: scale(1.3);
 }
 
 .post-scroll-slider::-moz-range-track {
   width: 100%;
-  height: 8px;
-  background: #2a2a2a;
+  height: 4px;
+  background: #3f3f46;
   border-radius: 5px;
 }

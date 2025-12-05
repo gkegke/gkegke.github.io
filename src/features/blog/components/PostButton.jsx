@@ -1,62 +1,89 @@
 import { useMemo } from 'react';
-import { Popover } from 'antd';
 import WordCloud from './Wordcloud';
 import { useMediaQuery } from '../../../hooks/useMediaQuery';
+import MouseOverPopover from '../../../components/MouseOverPopover';
+import LazyRender from '../../../components/LazyRender';
 
 export default function PostButton({ post, selected, onSelect }) {
   const handleClick = () => {
     onSelect(post.id);
   };
 
-  // Conditionally disable popover on screens smaller than the 'xs' breakpoint (340px)
   const isMobile = useMediaQuery('(max-width: 340px)');
-
   const memoizedWords = useMemo(() => post.keywords?.slice(0, 10) || [], [post.keywords]);
 
   const popoverContent = (
-    <p className="max-w-[250px] text-white">{post.description}</p>
+    <p className="text-gray-200 text-sm leading-relaxed">{post.description}</p>
+  );
+
+  const popoverTitle = (
+    <p className="max-w-[200px] text-wrap font-bold text-white mb-1">{post.title}</p>
   );
 
   const ButtonComponent = (
     <button
       id={`post-button-${post.id}`}
-      className={`relative overflow-hidden rounded-b-lg shadow-lg flex-shrink-0
-        ${selected ? 'bg-white text-black' : 'opacity-70 text-white'}
-        h-[200px] xs:h-[350px] w-[225px] max-w-[85vw]
-      `}
       onClick={handleClick}
+      className={`
+        relative overflow-hidden rounded-xl flex-shrink-0 transition-all duration-300 ease-out
+        h-[200px] xs:h-[350px] w-[225px] max-w-[85vw]
+        border border-white/5 group/button
+        ${selected 
+          ? 'bg-zinc-100 shadow-[0_0_30px_rgba(255,255,255,0.15)] scale-[1.02] border-white/20' 
+          : 'bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-white/10 hover:shadow-xl'
+        }
+      `}
     >
-      <div className="z-10 absolute left-2 bottom-2 px-2 rounded items-center w-full">
-        <div className="py-2 text-sm text-left">{post.date}</div>
-        <hr className={`w-11/12 ${selected ? 'border-gray-500' : 'border-white'}`} />
-        <div className="mt-2 rounded text-base font-bold text-left pr-2">
-          {post.title}
+      {/* Background WordCloud - Lazy Loaded to prevent TBT spikes */}
+      <div className={`absolute inset-0 z-0`}>
+        <LazyRender rootMargin="200px">
+           <WordCloud 
+              words={memoizedWords} 
+              selected={selected} 
+              maxFontSize={25} 
+              baseColor={selected ? "#000" : "#fff"}
+           />
+        </LazyRender>
+      </div>
+
+      {/* Content Overlay */}
+      <div className={`
+        absolute inset-0 z-10 flex flex-col justify-end p-4 text-left
+        bg-card-fade
+      `}>
+        <div className={`
+           transform transition-transform duration-300 origin-left
+        `}>
+          <div className={`text-xs font-mono tracking-widest uppercase mb-2 ${selected ? 'text-gray-100' : 'text-blue-400'}`}>
+            {post.date}
+          </div>
+          <h3 className={`
+            font-bold leading-tight text-lg line-clamp-3
+            ${selected ? 'text-white' : 'text-white drop-shadow-md'}
+          `}>
+            {post.title}
+          </h3>
+          
+          <div className={`
+            h-1 rounded-full mt-3 transition-all duration-500
+            ${selected ? 'bg-blue-500' : 'w-12 group-hover/button:w-full bg-white/50 group-hover/button:bg-blue-500'}
+          `} />
         </div>
       </div>
-      <WordCloud words={memoizedWords} selected={selected} maxFontSize={25} />
     </button>
   );
 
-  // If on a mobile screen, return the button without the Popover wrapper.
+  // On Mobile, just render the button. On Desktop, wrap with portal-aware popover.
   if (isMobile) {
     return ButtonComponent;
   }
 
   return (
-    <Popover
+    <MouseOverPopover
       content={popoverContent}
-      title={<p className="max-w-[200px] text-wrap font-bold text-white">{post.title}</p>}
-      placement="bottom"
-      trigger="hover"
-      width="200"
-      mouseEnterDelay={0.5} // Prevents popover from flashing while scrolling
-      overlayInnerStyle={{
-        backgroundColor: 'rgba(42, 42, 42, 0.9)', // Dark, slightly transparent background
-        backdropFilter: 'blur(4px)',
-        border: '1px solid #4a4a4a'
-      }}
+      title={popoverTitle}
     >
       {ButtonComponent}
-    </Popover>
+    </MouseOverPopover>
   );
 }

@@ -112,3 +112,5 @@ build/
 .ctxctx_cache/
 prompt_input*
 cargs
+
+prompts/

@@ -1,59 +1,87 @@
 import { NavLink } from 'react-router-dom';
-import { Tooltip } from 'antd';
-import { GithubOutlined } from '@ant-design/icons';
-import { useScrollOpacity } from '../hooks/useScrollOpacity';
+// Optimized import for tree-shaking
+import { FaGithub } from '@react-icons/all-files/fa/FaGithub';
+import { useMediaQuery } from '../hooks/useMediaQuery';
+import useScrollDirection from '../hooks/useScrollDirection';
 import Generator from './components/Generator';
+import AskAIWidget from './components/AskAIWidget';
+import SimpleTooltip from '../components/SimpleTooltip';
 
 export default function Header() {
-  const headerOpacity = useScrollOpacity(150);
+  const isVisible = useScrollDirection(); 
+  const isMobile = useMediaQuery('(max-width: 640px)');
 
   const headerStyle = {
-    opacity: headerOpacity,
-    pointerEvents: headerOpacity < 0.1 ? 'none' : 'auto',
-    backgroundColor: 'rgba(15, 15, 15, 0.6)',
-    backdropFilter: 'blur(2px)',
-    WebkitBackdropFilter: 'blur(2px)',
+    backgroundColor: isMobile ? '#09090b' : 'rgba(9, 9, 11, 0.75)',
+    backdropFilter: isMobile ? 'none' : 'blur(16px)',
+    WebkitBackdropFilter: isMobile ? 'none' : 'blur(16px)',
   };
 
-  const navLinkClasses = "px-5 py-2 text-sm font-bold rounded-full transition-all duration-300";
+  const navLinkBase = "px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 relative overflow-hidden group";
 
   return (
     <div
-      className="rounded-tl-lg fixed bottom-0 right-0 z-50 flex justify-between items-center transition-opacity duration-300 shadow-lg"
+      className={`
+        fixed bottom-0 left-0 right-0 z-50 
+        flex justify-between items-center px-3 sm:px-4 py-3 
+        border-t border-white/10 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.8)] 
+        transform-gpu transition-transform duration-300 ease-in-out
+        ${isVisible ? 'translate-y-0' : 'translate-y-[120%]'}
+      `}
       style={headerStyle}
     >
-      <div className="flex gap-4 justify-center items-center">
-        <Tooltip title="Checkout my Github">
-          <a href="https://github.com/gkegke" className="hidden xs:flex items-center justify-center rounded-full transition-colors hover:bg-gray-700">
-            <GithubOutlined className="text-white text-3xl" />
-          </a>
-        </Tooltip>
-        <div className="hidden text-nowrap text-2xl font-bold">
-          __ gkegke
-          <div className="text-sm text-wrap hidden xs:flex font-light text-gray-300">
-            Just some random thoughts
-          </div>
+      <div className="flex gap-2 sm:gap-6 justify-center items-center">
+       
+        {/* Desktop: Show Canvas Generator. */}
+        {!isMobile && (
+           <div className="hidden sm:block">
+              <Generator />
+           </div>
+        )}
+
+        {/* Mobile: Show Compact Text Logo to save space */}
+        <div className="block sm:hidden text-white font-bold tracking-widest text-base pl-2">
+           GKEGKE
         </div>
-        <Generator />
+
+        <div className="w-[1px] h-8 bg-gray-700 hidden xs:block"></div>
+
+        <SimpleTooltip content="Checkout my Github">
+          <a href="https://github.com/gkegke" className="hidden xs:flex items-center justify-center text-gray-400 hover:text-white transition-colors transform hover:scale-110">
+            <FaGithub className="text-2xl" />
+          </a>
+        </SimpleTooltip>
+ 
+        <div className="w-[1px] h-8 bg-gray-700 hidden sm:block"></div>
+
+        <AskAIWidget />
+
       </div>
 
-      <div className="flex items-center bg-gray-800/50 rounded-full p-1">
-        <NavLink
-          to="/blog"
-          className={({ isActive }) => 
-            `${navLinkClasses} ${isActive ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-700/80'}`
-          }
-        >
-          Blog
-        </NavLink>
-        <NavLink
-          to="/projects"
-          className={({ isActive }) => 
-            `${navLinkClasses} ${isActive ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-700/80'}`
-          }
-        >
-          Projects
-        </NavLink>
+      <div className="flex items-center">
+        {/* Navigation Pills */}
+        <div className="flex items-center gap-1 sm:gap-2 bg-black/20 p-1 rounded-full border border-white/5 backdrop-blur-md">
+          <NavLink
+            to="/blog"
+            className={({ isActive }) => 
+              `${navLinkBase} ${isActive 
+                ? 'bg-blue-600/90 text-white shadow-glow-blue' 
+                : 'text-gray-400 hover:text-white hover:bg-white/5'}`
+            }
+          >
+            Blog
+          </NavLink>
+          <NavLink
+            to="/projects"
+            className={({ isActive }) => 
+              `${navLinkBase} ${isActive 
+                ? 'bg-blue-600/90 text-white shadow-glow-blue' 
+                : 'text-gray-400 hover:text-white hover:bg-white/5'}`
+            }
+          >
+            Projects
+          </NavLink>
+        </div>
       </div>
     </div>
   );

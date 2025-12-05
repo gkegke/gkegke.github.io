@@ -2,6 +2,7 @@ import PostSelector from './components/PostSelector.jsx';
 import PostDetail from './components/PostDetail';
 import PostKeywordMatrix from './components/PostKeywordMatrix.jsx';
 import ReadingProgress from './components/ReadingProgress.jsx';
+import ScrollToTopButton from './components/ScrollToTopButton.jsx';
 import { useBlog } from './hooks/useBlog.jsx';
 import { useUI } from '../../context/UIContext.jsx';
 
@@ -25,6 +26,7 @@ export default function BlogPage() {
         <div className="flex gap-4 justify-center items-start">
           <PostDetail
             postId={selectedPostId}
+            postList={postList}
           />
           
           <div className="transition-opacity duration-300 group-[.is-focus]:opacity-0 group-[.is-focus]:invisible">
@@ -36,6 +38,9 @@ export default function BlogPage() {
           </div>
         </div>
       </div>
+      
+      {/* Render ScrollToTopButton only when not in Focus Mode */}
+      {!isFocusMode && <ScrollToTopButton />}
     </>
   );
 }

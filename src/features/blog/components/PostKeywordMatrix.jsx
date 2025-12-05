@@ -1,14 +1,11 @@
 import React, { useMemo, useState } from 'react';
-import { Tooltip } from 'antd';
-import { useScrollOpacity } from '../../../hooks/useScrollOpacity'
+import useScrollDirection from '../../../hooks/useScrollDirection';
 
 const PostKeywordMatrix = ({ posts, onPostSelect, selectedPostId }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const componentOpacity = useScrollOpacity(150);
+  const isVisible = useScrollDirection();
 
-  // Memoize the calculation of similarity scores and the sorting of posts.
   const { sortedPosts, maxScore } = useMemo(() => {
-    // If no post is selected or posts aren't loaded, return an empty state.
     if (!selectedPostId || posts.length === 0) {
       return { sortedPosts: [], maxScore: 0 };
     }
@@ -18,11 +15,9 @@ const PostKeywordMatrix = ({ posts, onPostSelect, selectedPostId }) => {
       return { sortedPosts: [], maxScore: 0 };
     }
     
-    // Create a Set of keywords from the selected post for efficient lookup.
     const selectedPostKeywords = new Set(selectedPost.keywords?.map(kw => kw.text) || []);
-    const maxPossibleScore = selectedPostKeywords.size; // This is our 100% benchmark.
+    const maxPossibleScore = selectedPostKeywords.size;
 
-    // Calculate a similarity score for every post based on matching keywords.
     const postsWithScores = posts.map(post => {
         if (post.id === selectedPostId) {
             return { ...post, similarityScore: maxPossibleScore };
@@ -37,83 +32,83 @@ const PostKeywordMatrix = ({ posts, onPostSelect, selectedPostId }) => {
 
   }, [posts, selectedPostId]);
   
-  // Don't render the button if there's nothing to show
   if (sortedPosts.length === 0) {
     return null;
   }
 
   const handlePostClick = (id) => {
     onPostSelect(id);
-    setIsOpen(false); // Close modal after selection
+    setIsOpen(false);
   };
-
-  const buttonStyle = {
-    opacity: componentOpacity,
-    pointerEvents: componentOpacity < 0.1 ? 'none' : 'auto',
-  };
-
+  
   return (
     <>
       {/* --- Toggle Button --- */}
       <button
         onClick={() => setIsOpen(true)}
-        style={buttonStyle}
         className={`
-          fixed top-1/2 right-0 -translate-y-1/2 z-40
-          bg-blue-600/80 text-white font-bold
-          py-4 px-2 rounded-l-lg
-          transition-all duration-300
-          hover:bg-blue-500 hover:pr-4
+          fixed top-2/3 right-0 -translate-y-1/2 z-40
+          text-blue-500 font-bold
+          py-6 px-1
+          transition-all duration-300 ease-in-out
+          hover:bg-zinc-700 hover:pr-3 hover:text-white
+          ${isVisible ? 'translate-x-0' : 'translate-x-full pointer-events-none'}
         `}
       >
-        <span style={{ writingMode: 'vertical-rl' }}>Related</span>
+        <span style={{ writingMode: 'vertical-rl' }} className="text-md tracking-widest uppercase">Related</span>
       </button>
 
       {/* --- Modal --- */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/70 z-50 flex justify-center items-center p-4"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex justify-center items-center p-4 transition-opacity duration-300"
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="flex flex-col rounded-lg p-4 w-[350px] max-w-[95vw] max-h-[80vh] border border-gray-700 bg-[rgba(15,15,15,0.9)] backdrop-blur-[5px]"
-            onClick={(e) => e.stopPropagation()} // Prevent modal from closing on content click
+            className="flex flex-col rounded-2xl w-[400px] max-w-[95vw] max-h-[80vh] border border-white/10 bg-[#121215] shadow-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex-shrink-0 flex justify-between items-center mb-4">
-              <h3 className="font-bold text-white text-lg">Related Posts</h3>
+            <div className="flex-shrink-0 flex justify-between items-center p-6 border-b border-white/5 bg-zinc-900/50">
+              <h3 className="font-bold text-white text-lg tracking-tight">Most Similar Post</h3>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-white text-2xl"
+                className="text-gray-500 hover:text-white transition-colors text-2xl leading-none"
                 aria-label="Close"
               >
                 &times;
               </button>
             </div>
             
-            <div className="flex flex-col gap-4 overflow-y-auto hide-scrollbar">
+            <div className="flex flex-col gap-3 overflow-y-auto hide-scrollbar p-6">
               {sortedPosts.map(post => {
                   const barPercentage = maxScore > 0 ? (post.similarityScore / maxScore) * 100 : 0;
                   const isSelected = post.id === selectedPostId;
 
                   return (
-                      <Tooltip key={post.id} title={`${post.similarityScore} keyword matches`} placement="top">
-                        <div
-                          onClick={() => handlePostClick(post.id)}
-                          className="cursor-pointer"
-                        >
-                            <div className="relative w-full h-14 bg-gray-800/50 rounded flex items-center overflow-hidden transition-all duration-300">
-                                <div 
-                                    className={`h-full rounded transition-[width,background-color] duration-500 ease-in-out ${isSelected ? 'bg-blue-200' : 'bg-blue-500'}`}
-                                    style={{ width: `${barPercentage}%` }}
-                                />
-                                <span
-                                  className={`text-wrap absolute top-1/2 -translate-y-1/2 left-3 text-white text-sm font-medium [text-shadow:1px_1px_2px_rgba(0,0,0,0.7)] pointer-events-none pr-2`}
-                                >
-                                    {post.title}
-                                </span>
-                            </div>
-                        </div>
-                      </Tooltip>
+                      <div 
+                        key={post.id}
+                        onClick={() => handlePostClick(post.id)}
+                        className="group cursor-pointer"
+                      >
+                         <div className="flex justify-between items-end mb-1 px-1">
+                            <span className={`text-sm truncate pr-4 ${isSelected ? 'text-blue-400 font-bold' : 'text-gray-300 group-hover:text-white'}`}>
+                                {post.title}
+                            </span>
+                            <span className="text-xs text-gray-500 font-mono">{post.similarityScore}</span>
+                         </div>
+                         
+                         {/* Bar Chart Track */}
+                         <div className="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
+                             <div 
+                                className={`h-full rounded-full transition-all duration-700 ease-out 
+                                    ${isSelected 
+                                        ? 'bg-gradient-to-r from-blue-400 to-blue-600 shadow-glow-blue' 
+                                        : 'bg-zinc-600 group-hover:bg-blue-500'
+                                    }`}
+                                style={{ width: `${barPercentage}%` }}
+                             />
+                         </div>
+                      </div>
                   );
               })}
             </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import ProjectSlideshow from './components/ProjectSlideshow.jsx';
 import ProjectsList from './components/ProjectsList.jsx';
 import { getProjects } from './services/projectService.js';
@@ -13,7 +13,7 @@ export default function ProjectsPage() {
     }, []);
 
     if (projects.length === 0) {
-        return null; // or a loading indicator
+        return null; 
     }
 
     const project = projects[current];
@@ -34,7 +34,7 @@ export default function ProjectsPage() {
             />
             {/* Left Side: Info */}
             <AnimatePresence mode="wait">
-                <motion.div
+                <m.div
                     key={current + '-left'}
                     initial={{ y: -60, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -68,11 +68,11 @@ export default function ProjectsPage() {
                             &#8594;
                         </button>
                     </div>
-                </motion.div>
+                </m.div>
             </AnimatePresence>
             {/* Right Side: Slideshow */}
             <AnimatePresence mode="wait">
-                <motion.div
+                <m.div
                     key={current + '-right'}
                     initial={{ y: 60, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -80,7 +80,7 @@ export default function ProjectsPage() {
                     transition={{ type: 'tween', stiffness: 50, damping: 11 }}
                 >
                     <ProjectSlideshow images={project.images} />
-                </motion.div>
+                </m.div>
             </AnimatePresence>
         </div>
     );

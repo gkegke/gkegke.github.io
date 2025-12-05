@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import { Space } from 'antd';
 
 // --- Constants ---
 const CHAR_THRESHOLDS = [0.005, 0.3, 0.4, 0.5, 1];
@@ -22,7 +21,7 @@ export default function Generator() {
   const [context, setContext] = useState(null);
   const animationFrameId = useRef(null);
   const lastUpdateTime = useRef(0);
-  const [isIntersecting, setIsIntersecting] = useState(false); // State to track visibility
+  const [isIntersecting, setIsIntersecting] = useState(false);
 
   // --- Canvas Drawing Logic ---
   const generate = useCallback((ctx, width, height) => {
@@ -71,7 +70,7 @@ export default function Generator() {
   useEffect(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
-    let observer; // Declare observer here
+    let observer;
 
     if (canvas && container) {
       const ctx = canvas.getContext("2d");
@@ -90,23 +89,22 @@ export default function Generator() {
       resizeObserver.observe(container);
       setContext(ctx);
 
-      // Setup Intersection Observer to control animation
       observer = new IntersectionObserver(
         ([entry]) => {
           setIsIntersecting(entry.isIntersecting);
         },
-        { threshold: 0.1 } // Start animation when 10% is visible
+        { threshold: 0.1 }
       );
       observer.observe(container);
 
       return () => {
         resizeObserver.disconnect();
-        if (observer) observer.disconnect(); // Disconnect observer on cleanup
+        if (observer) observer.disconnect();
       };
     }
   }, [generate]);
   
-  // --- Start/Stop Animation based on visibility ---
+  // --- Start/Stop Animation ---
   useEffect(() => {
     if (isIntersecting) {
       animationFrameId.current = requestAnimationFrame(animate);
@@ -129,9 +127,10 @@ export default function Generator() {
       className="relative overflow-hidden h-[50px] w-[150px]"
     >
       <canvas ref={canvasRef} className="w-full h-full" /> 
-      <Space className="absolute bottom-2 left-5 text-white flex items-start">
+      {/* Replaced Antd Space with simple flex */}
+      <div className="absolute bottom-2 left-5 text-white flex gap-2 items-start">
         <div className="text-xl font-bold">__ gkegke</div>
-      </Space>
+      </div>
     </div>
   );
 }

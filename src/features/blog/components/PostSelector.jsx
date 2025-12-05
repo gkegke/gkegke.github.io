@@ -63,7 +63,7 @@ export default function PostSelector({ postList, selectedPostId, onSelectPost })
   }, [selectedPostId, filteredPostList]);
 
   return (
-    <div className="w-full flex flex-col items-center justify-start overflow-hidden px-4">
+    <div className="w-full flex flex-col items-center justify-start overflow-hidden pl-2">
       <div className="w-full flex flex-col items-center justify-start">
         <div
           ref={scrollContainerRef}
