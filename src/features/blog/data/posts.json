@@ -378,5 +378,43 @@
       { "text": "Frontier Models", "weight": 5 },
       { "text": "Economic Modeling (AI)", "weight": 5 }
     ]
-  }
+  },
+  {
+    "id" : "11",
+  "title": "The Prefrontal Gap: Why LLMs Feel Almost Smart Enough—and Why the Last Jump Might Be Fast",
+  "description": "This post analyzes the disconnect between the high reasoning capabilities of modern LLMs and their failure in dynamic, long-horizon tasks, attributing this flaw to a lack of executive control akin to the biological prefrontal cortex. It examines the 'MAKER' system as proof that external scaffolding can solve autoregressive drift, arguing that the transition to fully agentic AI requires a structural 'phase shift' in error correction and prediction rather than just more raw compute.",
+    "date": "2025-12-06",
+  "keywords": [
+    { "text": "Prefrontal Cortex", "weight": 10 },
+    { "text": "Executive Control", "weight": 10 },
+    { "text": "AI Agency", "weight": 10 },
+    { "text": "MAKER System", "weight": 9 },
+    { "text": "Autoregressive Drift", "weight": 9 },
+    { "text": "Long-horizon Planning", "weight": 9 },
+    { "text": "LLM Limitations", "weight": 9 },
+    { "text": "World Model", "weight": 8 },
+    { "text": "External Scaffolding", "weight": 8 },
+    { "text": "Dynamic Environments", "weight": 8 },
+    { "text": "Error Correction", "weight": 8 },
+    { "text": "Prediction Loop", "weight": 8 },
+    { "text": "Biological Evolution", "weight": 7 },
+    { "text": "Cognitive Architecture", "weight": 7 },
+    { "text": "Dysexecutive Behaviour", "weight": 7 },
+    { "text": "Towers of Hanoi", "weight": 7 },
+    { "text": "Future of AI", "weight": 7 },
+    { "text": "Plan Stability", "weight": 7 },
+    { "text": "Context Window", "weight": 6 },
+    { "text": "Inhibition Mechanism", "weight": 6 },
+    { "text": "Agentic AI", "weight": 6 },
+    { "text": "Static Intelligence", "weight": 6 },
+    { "text": "Micro-agents", "weight": 6 },
+    { "text": "Verification", "weight": 6 },
+    { "text": "Neurobiology", "weight": 5 },
+    { "text": "Phase Shift", "weight": 5 },
+    { "text": "Composability", "weight": 5 },
+    { "text": "Reinforcement Learning", "weight": 5 },
+    { "text": "Computational Scale", "weight": 5 },
+    { "text": "Pattern Matching", "weight": 5 }
+  ]
+ }
 ]
