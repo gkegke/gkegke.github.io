@@ -1,50 +1,54 @@
 [
-	{
-		"id": 1,
-		"name": "LovoHato",
-		"description": "Filter and organize large collections of media fast.",
-		"url": "https://github.com/gkegke/LovoHato",
-		"images": [
-			"LovoHato2.png",
-			"LovoHato3.png",
-			"LovoHato4.png",
-			"LovoHato5.png"
-		]
-	},
-	{
-		"id": 2,
-		"name": "ModernFileExplorer",
-		"description": "Filter and organize large collections of media fast.",
-		"url": "https://github.com/gkegke/ModernFileExplorer",
-		"images": [
-			"LovoHato2.png",
-			"LovoHato3.png",
-			"LovoHato4.png",
-			"LovoHato5.png"
-		]
-	},
-	{
-		"id": 3,
-		"name": "runrun",
-		"description": "Filter and organize large collections of media fast.",
-		"url": "https://github.com/gkegke/ModernFileExplorer",
-		"images": [
-			"LovoHato2.png",
-			"LovoHato3.png",
-			"LovoHato4.png",
-			"LovoHato5.png"
-		]
-	},
-	{
-		"id": 4,
-		"name": "Memorii",
-		"description": "Filter and organize large collections of media fast.",
-		"url": "https://github.com/gkegke/ModernFileExplorer",
-		"images": [
-			"LovoHato2.png",
-			"LovoHato3.png",
-			"LovoHato4.png",
-			"LovoHato5.png"
-		]
-	}
+  {
+    "id": 1,
+    "name": "LovoHato",
+    "description": "Filter and organize large collections of media fast. A desktop application built to handle massive local datasets with ease.",
+    "url": "https://github.com/gkegke/LovoHato",
+    "images": [
+      "LovoHato2.png",
+      "LovoHato3.png",
+      "LovoHato4.png",
+      "LovoHato5.png"
+    ],
+    "tags": ["electron", "react", "full stack", "tooling"]
+  },
+  {
+    "id": 2,
+    "name": "ModernFileExplorer",
+    "description": "A replacement for the native file explorer focusing on keyboard navigation and speed.",
+    "url": "https://github.com/gkegke/ModernFileExplorer",
+    "images": [
+      "LovoHato2.png",
+      "LovoHato3.png",
+      "LovoHato4.png",
+      "LovoHato5.png"
+    ],
+    "tags": ["c#", "wpf", "windows", "productivity"]
+  },
+  {
+    "id": 3,
+    "name": "runrun",
+    "description": "A lightweight task runner and script manager for developer workflows.",
+    "url": "https://github.com/gkegke/ModernFileExplorer",
+    "images": [
+      "LovoHato2.png",
+      "LovoHato3.png",
+      "LovoHato4.png",
+      "LovoHato5.png"
+    ],
+    "tags": ["golang", "cli", "devops", "automation"]
+  },
+  {
+    "id": 4,
+    "name": "Memorii",
+    "description": "Spaced repetition system for learning languages and complex topics.",
+    "url": "https://github.com/gkegke/ModernFileExplorer",
+    "images": [
+      "LovoHato2.png",
+      "LovoHato3.png",
+      "LovoHato4.png",
+      "LovoHato5.png"
+    ],
+    "tags": ["react", "firebase", "education", "mobile"]
+  }
 ]
