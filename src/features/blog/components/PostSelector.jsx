@@ -6,6 +6,9 @@ import { throttle } from '../../../utils/helpers.js';
 export default function PostSelector({ postList, selectedPostId, onSelectPost }) {
   const scrollContainerRef = useRef(null);
   const [sliderValue, setSliderValue] = useState(0);
+  
+  // Track initial load to prevent unwanted smooth-scroll animations on refresh
+  const isFirstRun = useRef(true);
 
   const filteredPostList = useMemo(() => {
     return postList;
@@ -26,6 +29,9 @@ export default function PostSelector({ postList, selectedPostId, onSelectPost })
     const container = scrollContainerRef.current;
     if (!container) return;
 
+    // Fix: Close any open popovers instantly when scrolling starts
+    window.dispatchEvent(new Event('scroll-close-popover'));
+
     const { scrollLeft, scrollWidth, clientWidth } = container;
     const maxScrollLeft = scrollWidth - clientWidth;
     
@@ -41,7 +47,7 @@ export default function PostSelector({ postList, selectedPostId, onSelectPost })
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
-      const throttledScrollHandler = throttle(handleScroll, 100);
+      const throttledScrollHandler = throttle(handleScroll, 30);
       container.addEventListener('scroll', throttledScrollHandler);
       handleScroll();
       return () => {
@@ -50,13 +56,44 @@ export default function PostSelector({ postList, selectedPostId, onSelectPost })
     }
   }, [handleScroll]);
 
-  // Auto-scroll to selected post on load
+  // Auto-scroll logic with robust math
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container && filteredPostList.length > 0 && selectedPostId) {
       const selectedButton = container.querySelector(`#post-button-${selectedPostId}`);
+      
       if (selectedButton) {
-        selectedButton.scrollIntoView({ behavior: 'auto', inline: 'center' });
+        // USE getBoundingClientRect for Robustness against Transforms
+        const containerRect = container.getBoundingClientRect();
+        const buttonRect = selectedButton.getBoundingClientRect();
+
+        // Calculate centers relative to the viewport
+        const buttonCenter = buttonRect.left + buttonRect.width / 2;
+        const containerCenter = containerRect.left + containerRect.width / 2;
+
+        // Calculate the distance to shift (offset)
+        const offset = buttonCenter - containerCenter;
+        
+        // Apply offset to current scroll position
+        const targetScrollLeft = container.scrollLeft + offset;
+
+        // Behavior: Instant on first load, Smooth on user clicks
+        const behavior = isFirstRun.current ? 'auto' : 'smooth';
+
+        container.scrollTo({
+          left: targetScrollLeft,
+          behavior: behavior
+        });
+
+        // Sync slider immediately if instant scroll (because scroll event might not fire/sync perfectly)
+        const maxScrollLeft = container.scrollWidth - container.clientWidth;
+        if (behavior === 'auto' && maxScrollLeft > 0) {
+             const clampedTarget = Math.max(0, Math.min(targetScrollLeft, maxScrollLeft));
+             const exactPercentage = (clampedTarget / maxScrollLeft) * 100;
+             setSliderValue(exactPercentage);
+        }
+
+        isFirstRun.current = false;
       }
     }
   }, [selectedPostId, filteredPostList]);
@@ -69,7 +106,6 @@ export default function PostSelector({ postList, selectedPostId, onSelectPost })
         <div
           ref={scrollContainerRef}
           className="flex flex-row gap-x-3 xs:gap-x-4 hide-scrollbar overflow-x-auto scroll-smooth w-full px-2 py-4"
-          style={{ scrollBehavior: 'smooth' }}
         >
           {filteredPostList.map((post, i) => {
             const isSelected = post.id === selectedPostId;
@@ -93,7 +129,7 @@ export default function PostSelector({ postList, selectedPostId, onSelectPost })
             max="100"
             value={sliderValue}
             onInput={handleRangeChange}
-            className="w-full post-scroll-slider h-1" // Thinner slider class
+            className="w-full post-scroll-slider h-1" 
             disabled={postList.length === 0}
             aria-label="Scroll through posts"
           />

@@ -9,7 +9,11 @@ export default function PostButton({ post, selected, onSelect }) {
     onSelect(post.id);
   };
 
-  const isMobile = useMediaQuery('(max-width: 340px)');
+  // Fix: Detect touch/mobile to disable popovers
+  const isTouchDevice = useMediaQuery('(hover: none) and (pointer: coarse)');
+  const isSmallScreen = useMediaQuery('(max-width: 768px)');
+  const shouldDisablePopover = isTouchDevice || isSmallScreen;
+
   const memoizedWords = useMemo(() => post.keywords?.slice(0, 10) || [], [post.keywords]);
 
   const popoverContent = (
@@ -34,7 +38,6 @@ export default function PostButton({ post, selected, onSelect }) {
         }
       `}
     >
-      {/* Background WordCloud - Lazy Loaded to prevent TBT spikes */}
       <div className={`absolute inset-0 z-0`}>
         <LazyRender rootMargin="200px">
            <WordCloud 
@@ -46,7 +49,6 @@ export default function PostButton({ post, selected, onSelect }) {
         </LazyRender>
       </div>
 
-      {/* Content Overlay */}
       <div className={`
         absolute inset-0 z-10 flex flex-col justify-end p-4 text-left
         bg-card-fade
@@ -73,8 +75,8 @@ export default function PostButton({ post, selected, onSelect }) {
     </button>
   );
 
-  // On Mobile, just render the button. On Desktop, wrap with portal-aware popover.
-  if (isMobile) {
+  // Responsive Fix: Return raw button on mobile, wrapped popover on desktop
+  if (shouldDisablePopover) {
     return ButtonComponent;
   }
 

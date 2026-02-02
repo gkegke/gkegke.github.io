@@ -23,6 +23,15 @@ $fire-4: #ffffff; // White core
   filter: drop-shadow(0 0 20px rgba(50, 205, 50, 0.4)); /* Green glow */
 }
 
+/* Mobile: Make it cute/smaller */
+@media (max-width: 640px) {
+  .stage {
+    min-width: 200px; /* Allow shrinking */
+    transform: scale(0.6); /* Scale down to look 'cute' and contained */
+    transform-origin: bottom center;
+  }
+}
+
 .container {
   position: relative;
   width: 100%;

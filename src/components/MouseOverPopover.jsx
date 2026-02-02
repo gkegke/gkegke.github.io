@@ -1,23 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-/**
- * A lightweight Portal-based Popover that triggers on hover.
- * Essential for rendering content outside of overflow-hidden parents.
- */
 export default function MouseOverPopover({ children, content, title }) {
   const [isVisible, setIsVisible] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
   const triggerRef = useRef(null);
   
-  // Calculate position on hover
   const handleMouseEnter = () => {
     if (triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
       const scrollY = window.scrollY;
       
       setCoords({
-        // Position below the element, centered
         top: rect.bottom + scrollY + 10, 
         left: rect.left + rect.width / 2,
       });
@@ -28,6 +22,21 @@ export default function MouseOverPopover({ children, content, title }) {
   const handleMouseLeave = () => {
     setIsVisible(false);
   };
+
+  // Fix: Add listeners to close popover on scroll
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const closePopover = () => setIsVisible(false);
+
+    window.addEventListener('scroll', closePopover, { passive: true });
+    window.addEventListener('scroll-close-popover', closePopover);
+
+    return () => {
+      window.removeEventListener('scroll', closePopover);
+      window.removeEventListener('scroll-close-popover', closePopover);
+    };
+  }, [isVisible]);
 
   return (
     <>
@@ -46,7 +55,7 @@ export default function MouseOverPopover({ children, content, title }) {
           style={{ 
             top: coords.top, 
             left: coords.left,
-            transform: 'translateX(-50%)' // Center align based on calculated left
+            transform: 'translateX(-50%)' 
           }}
         >
           <div className="
