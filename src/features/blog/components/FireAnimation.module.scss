@@ -1,0 +1,108 @@
+/* 
+  Fire Animation SCSS 
+*/
+
+// Variables for base colors - Adjusted for a "Toxic/Magic" Green
+$fire-1: #ccff00; // Bright Acid Green
+$fire-2: #00ff41; // Matrix Green
+$fire-3: #fde37b; // Yellow highlight
+$fire-4: #ffffff; // White core
+
+.stage {
+  position: relative;
+  width: 100%; 
+  min-width: 350px;
+  max-width: 750px; 
+  height: 100%; 
+  display: flex;
+  align-items: flex-end; /* Anchor fire to bottom */
+  justify-content: center;
+  overflow: visible;
+  pointer-events: none;
+  /* Add a subtle glow behind the fire */
+  filter: drop-shadow(0 0 20px rgba(50, 205, 50, 0.4)); /* Green glow */
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 350px; 
+  /* DYNAMIC COLOR SHIFT - Subtle shift between green/teal */
+  animation: color-cycle 20s infinite linear; 
+}
+
+@keyframes color-cycle {
+  0% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(40deg); } /* Shifts towards teal/blue */
+  100% { filter: hue-rotate(0deg); }
+}
+
+.group {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+}
+
+.flame {
+  position: absolute;
+  bottom: 0;
+  border-radius: 50% 50% 35% 35%;
+  transform-origin: bottom center;
+  mix-blend-mode: screen; 
+  opacity: 0.9;
+}
+
+/* Flame Flicker Animation */
+@keyframes fire-flicker {
+  0%   { transform: scaleY(1) rotate(0deg); }
+  25%  { transform: scaleY(0.8) rotate(2deg); }
+  50%  { transform: scaleY(0.9) rotate(-2deg); }
+  75%  { transform: scaleY(0.7) rotate(1deg); }
+  100% { transform: scaleY(1) rotate(0deg); }
+}
+
+/* Group 1: The Base (Darkest/Greenest) */
+.fireRed .flame {
+  background: $fire-1;
+  box-shadow: 0 0 50px 10px $fire-1;
+  width: 60px;
+}
+.fireRed .flame:nth-child(1) { left: 20%; height: 120px; animation: fire-flicker 2s 0.15s ease-in-out infinite alternate; }
+.fireRed .flame:nth-child(2) { left: 35%; height: 180px; animation: fire-flicker 2s 0.35s ease-in-out infinite alternate; }
+.fireRed .flame:nth-child(3) { left: 50%; height: 220px; animation: fire-flicker 2s 0.1s ease-in-out infinite alternate; }
+.fireRed .flame:nth-child(4) { left: 65%; height: 240px; animation: fire-flicker 2s 0s ease-in-out infinite alternate; }
+.fireRed .flame:nth-child(5) { left: 80%; height: 200px; animation: fire-flicker 2s 0.45s ease-in-out infinite alternate; }
+
+/* Group 2: The Body (Matrix Green) */
+.fireOrange .flame {
+  background: $fire-2;
+  box-shadow: 0 0 40px 10px $fire-2;
+  width: 45px;
+}
+.fireOrange .flame:nth-child(1) { left: 25%; height: 100px; animation: fire-flicker 2s 0.05s ease-in-out infinite alternate; }
+.fireOrange .flame:nth-child(2) { left: 40%; height: 160px; animation: fire-flicker 2s 0.1s ease-in-out infinite alternate; }
+.fireOrange .flame:nth-child(3) { left: 55%; height: 190px; animation: fire-flicker 2s 0.35s ease-in-out infinite alternate; }
+.fireOrange .flame:nth-child(4) { left: 70%; height: 210px; animation: fire-flicker 2s 0.4s ease-in-out infinite alternate; }
+
+/* Group 3: The Highlights (Yellow) */
+.fireYellow .flame {
+  background: $fire-3;
+  box-shadow: 0 0 30px 10px $fire-3;
+  width: 35px;
+}
+.fireYellow .flame:nth-child(1) { left: 35%; height: 100px; animation: fire-flicker 2s 0.6s ease-in-out infinite alternate; }
+.fireYellow .flame:nth-child(2) { left: 50%; height: 140px; animation: fire-flicker 2s 0.4s ease-in-out infinite alternate; }
+.fireYellow .flame:nth-child(3) { left: 65%; height: 180px; animation: fire-flicker 2s 0.38s ease-in-out infinite alternate; }
+
+/* Group 4: The Core (White/Hot) */
+.fireWhite .flame {
+  background: $fire-4;
+  box-shadow: 0 0 30px 10px rgba(255, 255, 255, 0.6);
+  width: 20px;
+}
+.fireWhite .flame:nth-child(1) { left: 45%; height: 80px; animation: fire-flicker 2s 0.22s ease-in-out infinite alternate; }
+.fireWhite .flame:nth-child(2) { left: 55%; height: 90px; animation: fire-flicker 2s 0.42s ease-in-out infinite alternate; }
+.fireWhite .flame:nth-child(3) { left: 50%; height: 120px; animation: fire-flicker 2s 0.32s ease-in-out infinite alternate; }

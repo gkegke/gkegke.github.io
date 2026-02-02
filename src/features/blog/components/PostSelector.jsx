@@ -8,8 +8,6 @@ export default function PostSelector({ postList, selectedPostId, onSelectPost })
   const [sliderValue, setSliderValue] = useState(0);
 
   const filteredPostList = useMemo(() => {
-    // Note: The filter input is currently disabled in the UI.
-    // This logic is kept for potential future use.
     return postList;
   }, [postList]);
 
@@ -52,6 +50,7 @@ export default function PostSelector({ postList, selectedPostId, onSelectPost })
     }
   }, [handleScroll]);
 
+  // Auto-scroll to selected post on load
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container && filteredPostList.length > 0 && selectedPostId) {
@@ -63,11 +62,13 @@ export default function PostSelector({ postList, selectedPostId, onSelectPost })
   }, [selectedPostId, filteredPostList]);
 
   return (
-    <div className="w-full flex flex-col items-center justify-start overflow-hidden pl-2">
+    <div className="w-full flex flex-col items-center justify-start overflow-hidden pl-2 pb-4">
       <div className="w-full flex flex-col items-center justify-start">
+        
+        {/* Posts Row */}
         <div
           ref={scrollContainerRef}
-          className="flex flex-row gap-x-4 hide-scrollbar overflow-x-auto scroll-smooth w-full"
+          className="flex flex-row gap-x-3 xs:gap-x-4 hide-scrollbar overflow-x-auto scroll-smooth w-full px-2 py-4"
           style={{ scrollBehavior: 'smooth' }}
         >
           {filteredPostList.map((post, i) => {
@@ -84,15 +85,17 @@ export default function PostSelector({ postList, selectedPostId, onSelectPost })
           })}
         </div>
         
-        <div className="w-3/4 lg:w-1/2 flex justify-center items-center my-4">
+        {/* Slider Controls */}
+        <div className="w-3/4 lg:w-1/3 flex justify-center items-center mt-2 mb-2 opacity-50 hover:opacity-100 transition-opacity duration-300">
           <input
             type="range"
             min="0"
             max="100"
             value={sliderValue}
             onInput={handleRangeChange}
-            className="w-full post-scroll-slider"
+            className="w-full post-scroll-slider h-1" // Thinner slider class
             disabled={postList.length === 0}
+            aria-label="Scroll through posts"
           />
         </div>
       </div>

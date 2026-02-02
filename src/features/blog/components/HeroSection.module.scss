@@ -1,0 +1,95 @@
+/* --- Variables --- */
+$c-primary: #ccff00; /* Acid Green */
+$c-secondary: #00ff41; /* Matrix Green */
+
+.heroContainer {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  perspective: 1000px; /* For 3D parallax effects */
+  
+  /* Initial CSS vars for mouse tracking (default to center) */
+  --mouse-x: 0;
+  --mouse-y: 0;
+}
+
+/* --- Feature 2: Breathing Vignette --- */
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  animation: breathe 6s ease-in-out infinite alternate;
+}
+
+@keyframes breathe {
+  0% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0.9; transform: scale(1.05); }
+}
+
+/* --- Feature 4: Parallax Container for Fire --- */
+.fireWrapper {
+  position: relative;
+  z-index: 10;
+  /* Move slightly opposite to mouse */
+  transform: translate(calc(var(--mouse-x) * -20px), calc(var(--mouse-y) * -10px));
+  transition: transform 0.1s ease-out;
+  filter: drop-shadow(0 0 30px rgba(0, 255, 65, 0.2));
+}
+
+/* --- Feature 1: Particle Embers --- */
+.emberContainer {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px; /* Match fire width mostly */
+  height: 100%;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.ember {
+  position: absolute;
+  bottom: 0;
+  width: 4px;
+  height: 4px;
+  background-color: $c-primary;
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: 0 0 10px $c-primary;
+  animation: rise var(--duration) linear infinite;
+  animation-delay: var(--delay);
+  left: var(--pos-x);
+}
+
+@keyframes rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(1);
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-400px) scale(0) translateX(calc(var(--drift) * 50px));
+  }
+}
+
+/* Mobile Adjustments */
+@media (max-width: 640px) {
+
+  /* Disable intense parallax on mobile to prevent motion sickness/jank */
+  .fireWrapper, .titleWrapper {
+    transform: none !important;
+  }
+}
