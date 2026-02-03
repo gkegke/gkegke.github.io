@@ -47,7 +47,12 @@ export const getPosts = () => {
  */
 export const getPostContent = async (postId) => {
   try {
-    const response = await fetch(`${PATHS.POSTS_MARKDOWN}${postId}.md`);
+    // Use 'no-cache' to ensure we don't serve a cached 404 if the user
+    // visited the site before the new post was deployed/propagated.
+    const response = await fetch(`${PATHS.POSTS_MARKDOWN}${postId}.md`, {
+      cache: 'no-cache' 
+    });
+    
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
