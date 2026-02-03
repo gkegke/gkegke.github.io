@@ -17,7 +17,7 @@ export default function BlogPage() {
 
       <div className={`w-full min-h-screen flex flex-col gap-6 group ${isFocusMode ? 'is-focus' : ''}`}>
         
-        <HeroSection isFocusMode={isFocusMode} />
+      {!isFocusMode && <HeroSection /> }
 
         {/* 
            Post Selector Strip 

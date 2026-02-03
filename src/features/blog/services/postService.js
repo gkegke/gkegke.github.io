@@ -12,11 +12,18 @@ const parseDateString = (dateString) => {
   return dateString.replace(/(\d+)(st|nd|rd|th)/, '$1');
 };
 
+// Cache the processed posts to ensure array reference stability across renders
+let _cachedPosts = null;
+
 /**
  * Fetches and returns the list of blog posts, sorted by date descending.
  * It also ensures that post IDs are numbers for consistent handling throughout the app.
  */
 export const getPosts = () => {
+  if (_cachedPosts) {
+    return _cachedPosts;
+  }
+
   // Coerce string IDs from JSON to numbers to prevent type mismatches,
   // especially when comparing with IDs from URL parameters.
   const typedPosts = postData.map(post => ({
@@ -24,11 +31,13 @@ export const getPosts = () => {
     id: parseInt(post.id, 10),
   }));
 
-  return typedPosts.sort((a, b) => {
+  _cachedPosts = typedPosts.sort((a, b) => {
     const dateA = new Date(parseDateString(a.date));
     const dateB = new Date(parseDateString(b.date));
     return dateB - dateA; // Sort descending (newest first)
   });
+
+  return _cachedPosts;
 };
 
 /**

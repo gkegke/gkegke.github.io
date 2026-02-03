@@ -20,16 +20,14 @@ body {
 
 /* FIX: Set html background to match body to prevent white box during mobile overscroll */
 html {
-  background-color: #0f0f0f;
+  background-color: #000;
   /* Prevent horizontal scroll on mobile if elements slightly overflow */
   overflow-x: hidden; 
 }
 
 body {
   /* Deep, rich dark background with a subtle spotlight effect */
-  background-color: #0f0f0f;
-  background-image: radial-gradient(circle at 50% 0%, #1e1e24 0%, #0f0f0f 100%);
-  
+  background: #000;
   background-attachment: fixed; /* Parallax-like feel */
   color: #e4e4e7; /* Zinc-200 */
   

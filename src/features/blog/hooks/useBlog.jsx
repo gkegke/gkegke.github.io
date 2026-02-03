@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { usePosts } from './usePosts';
 
@@ -6,25 +6,41 @@ export const useBlog = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
   const postList = usePosts();
-  const [selectedPostId, setSelectedPostId] = useState(null);
 
-  useEffect(() => {
-    if (postList.length > 0) {
-      // When no specific post is selected via the URL, default to the newest post.
-      const currentPostId = postId ? parseInt(postId, 10) : postList[0]?.id;
+  // DERIVED STATE:
+  // Instead of syncing local state with a useEffect (which causes a render gap),
+  // we calculate the active ID immediately.
+  const selectedPostId = useMemo(() => {
+    if (postList.length === 0) return null;
 
-      if (currentPostId && postList.find(p => p.id === currentPostId)) {
-        setSelectedPostId(currentPostId);
-      } else if (postList[0]?.id) {
-        // Fallback to the default post if the URL postId is invalid.
-        navigate(`/blog/${postList[0].id}`, { replace: true });
+    // 1. If URL has an ID, try to use it
+    if (postId) {
+      const parsedId = parseInt(postId, 10);
+      if (postList.find(p => p.id === parsedId)) {
+        return parsedId;
       }
     }
-  }, [postList, postId, navigate]);
+
+    // 2. Fallback to newest post
+    return postList[0].id;
+  }, [postId, postList]);
+
+  // EFFECT: Handle URL synchronization only.
+  // If the user lands on /blog (no ID), or an invalid ID, we update the URL.
+  // The UI is already showing the correct post thanks to the derived state above.
+  useEffect(() => {
+    if (postList.length > 0) {
+      const currentUrlId = postId ? parseInt(postId, 10) : null;
+      
+      // If the URL ID doesn't match our determined selectedPostId (e.g. it was null or invalid)
+      if (currentUrlId !== selectedPostId) {
+        navigate(`/blog/${selectedPostId}`, { replace: !postId }); // Replace history if fixing a default load
+      }
+    }
+  }, [postList, postId, selectedPostId, navigate]);
 
   const selectPost = (id) => {
     if (selectedPostId !== id) {
-      setSelectedPostId(id);
       navigate(`/blog/${id}`);
     }
   };
