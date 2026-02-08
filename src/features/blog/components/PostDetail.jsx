@@ -11,7 +11,10 @@ const MarkdownRenderer = lazy(() => import('./MarkdownRenderer.jsx'));
 export default function PostDetail({ postId, postList }) {
   const mdText = usePostMarkdown(postId);
   const { isFocusMode, setIsFocusMode } = useUI();
-  const readingModeOpacity = useScrollOpacity(100);
+  
+  // FIX: Increased threshold to 800 to account for Hero + Selector height. 
+  // Previously 100 caused it to disappear immediately.
+  const readingModeOpacity = useScrollOpacity(800);
 
   // Find the current post for metadata
   const currentPost = useMemo(() => {
@@ -52,7 +55,13 @@ export default function PostDetail({ postId, postList }) {
           </button>
         </div>
    
-        <FadeInSection>
+        {/* 
+           FIX: alwaysVisible={true} ensures the post is rendered immediately.
+           Relying on IntersectionObserver here caused mobile views to render blank 
+           because the Hero+Selector pushed this component off-screen or caused 
+           false-negatives in the observer logic.
+        */}
+        <FadeInSection alwaysVisible={true}>
           <div className={`
               prose prose-invert prose-lg md:prose-xl max-w-none
               ${!isFocusMode ? 'md:bg-zinc-900/30 md:p-12 md:rounded-2xl' : ''}

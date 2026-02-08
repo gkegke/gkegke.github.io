@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import useScrollDirection from '../../../hooks/useScrollDirection';
 
 const PostKeywordMatrix = ({ posts, onPostSelect, selectedPostId }) => {
@@ -41,6 +42,64 @@ const PostKeywordMatrix = ({ posts, onPostSelect, selectedPostId }) => {
     setIsOpen(false);
   };
   
+  // Define the Modal JSX separately
+  const modalContent = (
+    <div
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex justify-center items-center p-4 transition-opacity duration-300"
+      onClick={() => setIsOpen(false)}
+    >
+      <div
+        className="flex flex-col rounded-2xl w-[400px] max-w-[95vw] max-h-[80vh] border border-white/10 bg-[#121215] shadow-2xl overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex-shrink-0 flex justify-between items-center p-6 border-b border-white/5 bg-zinc-900/50">
+          <h3 className="font-bold text-white text-lg tracking-tight">Most Similar Post</h3>
+          <button
+            onClick={() => setIsOpen(false)}
+            className="text-gray-500 hover:text-white transition-colors text-2xl leading-none"
+            aria-label="Close"
+          >
+            &times;
+          </button>
+        </div>
+        
+        <div className="flex flex-col gap-3 overflow-y-auto hide-scrollbar p-6">
+          {sortedPosts.map(post => {
+              const barPercentage = maxScore > 0 ? (post.similarityScore / maxScore) * 100 : 0;
+              const isSelected = post.id === selectedPostId;
+
+              return (
+                  <div 
+                    key={post.id}
+                    onClick={() => handlePostClick(post.id)}
+                    className="group cursor-pointer"
+                  >
+                     <div className="flex justify-between items-end mb-1 px-1">
+                        <span className={`text-sm truncate pr-4 ${isSelected ? 'text-blue-400 font-bold' : 'text-gray-300 group-hover:text-white'}`}>
+                            {post.title}
+                        </span>
+                        <span className="text-xs text-gray-500 font-mono">{post.similarityScore}</span>
+                     </div>
+                     
+                     {/* Bar Chart Track */}
+                     <div className="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
+                         <div 
+                            className={`h-full rounded-full transition-all duration-700 ease-out 
+                                ${isSelected 
+                                    ? 'bg-gradient-to-r from-blue-400 to-blue-600 shadow-glow-blue' 
+                                    : 'bg-zinc-600 group-hover:bg-blue-500'
+                                }`}
+                            style={{ width: `${barPercentage}%` }}
+                         />
+                     </div>
+                  </div>
+              );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+  
   return (
     <>
       {/* --- Toggle Button --- */}
@@ -58,63 +117,12 @@ const PostKeywordMatrix = ({ posts, onPostSelect, selectedPostId }) => {
         <span style={{ writingMode: 'vertical-rl' }} className="text-md tracking-widest uppercase">Related</span>
       </button>
 
-      {/* --- Modal --- */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex justify-center items-center p-4 transition-opacity duration-300"
-          onClick={() => setIsOpen(false)}
-        >
-          <div
-            className="flex flex-col rounded-2xl w-[400px] max-w-[95vw] max-h-[80vh] border border-white/10 bg-[#121215] shadow-2xl overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex-shrink-0 flex justify-between items-center p-6 border-b border-white/5 bg-zinc-900/50">
-              <h3 className="font-bold text-white text-lg tracking-tight">Most Similar Post</h3>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-gray-500 hover:text-white transition-colors text-2xl leading-none"
-                aria-label="Close"
-              >
-                &times;
-              </button>
-            </div>
-            
-            <div className="flex flex-col gap-3 overflow-y-auto hide-scrollbar p-6">
-              {sortedPosts.map(post => {
-                  const barPercentage = maxScore > 0 ? (post.similarityScore / maxScore) * 100 : 0;
-                  const isSelected = post.id === selectedPostId;
-
-                  return (
-                      <div 
-                        key={post.id}
-                        onClick={() => handlePostClick(post.id)}
-                        className="group cursor-pointer"
-                      >
-                         <div className="flex justify-between items-end mb-1 px-1">
-                            <span className={`text-sm truncate pr-4 ${isSelected ? 'text-blue-400 font-bold' : 'text-gray-300 group-hover:text-white'}`}>
-                                {post.title}
-                            </span>
-                            <span className="text-xs text-gray-500 font-mono">{post.similarityScore}</span>
-                         </div>
-                         
-                         {/* Bar Chart Track */}
-                         <div className="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
-                             <div 
-                                className={`h-full rounded-full transition-all duration-700 ease-out 
-                                    ${isSelected 
-                                        ? 'bg-gradient-to-r from-blue-400 to-blue-600 shadow-glow-blue' 
-                                        : 'bg-zinc-600 group-hover:bg-blue-500'
-                                    }`}
-                                style={{ width: `${barPercentage}%` }}
-                             />
-                         </div>
-                      </div>
-                  );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* 
+         FIX: Use Portal to ensure Modal sits on top of everything.
+         Previously, the modal was trapped in the z-0 stacking context of the layout,
+         causing it to render behind the z-10 PostSelector buttons.
+      */}
+      {isOpen && createPortal(modalContent, document.body)}
     </>
   );
 };

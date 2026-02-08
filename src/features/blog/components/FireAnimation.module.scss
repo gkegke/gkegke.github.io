@@ -26,8 +26,9 @@ $fire-4: #ffffff; // White core
 /* Mobile: Make it cute/smaller */
 @media (max-width: 640px) {
   .stage {
-    min-width: 200px; /* Allow shrinking */
-    transform: scale(0.6); /* Scale down to look 'cute' and contained */
+    min-width: 275px; /* Allow shrinking */
+    padding: 20px 0 0;
+    transform: scale(0.7) translate(-40px, 0); /* Scale down to look 'cute' and contained */
     transform-origin: bottom center;
   }
 }

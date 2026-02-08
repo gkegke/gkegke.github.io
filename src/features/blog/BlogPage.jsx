@@ -48,16 +48,20 @@ export default function BlogPage() {
             postId={selectedPostId}
             postList={postList}
           />
-          
-          {/* Sidebar / Matrix */}
-          <div className="transition-opacity duration-300 group-[.is-focus]:opacity-0 group-[.is-focus]:invisible">
-            <PostKeywordMatrix
-              posts={postList}
-              onPostSelect={selectPost}
-              selectedPostId={selectedPostId}
-            />
-          </div>
         </div>
+      </div>
+      
+      {/* 
+        FIX: Moved PostKeywordMatrix outside the layout structure.
+        It uses fixed positioning (for the button) and Portals (for the modal),
+        so it doesn't need to be nested in the content flow div.
+      */}
+      <div className="transition-opacity duration-300 group-[.is-focus]:opacity-0 group-[.is-focus]:invisible">
+        <PostKeywordMatrix
+          posts={postList}
+          onPostSelect={selectPost}
+          selectedPostId={selectedPostId}
+        />
       </div>
       
       {!isFocusMode && <ScrollToTopButton />}
