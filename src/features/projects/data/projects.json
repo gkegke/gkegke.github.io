@@ -1,6 +1,28 @@
 [
   {
     "id": 1,
+    "name": "ReadReadAI",
+    "description": "Text to Speech content generation PWA WASM privacy-first offline-first studio mvp.",
+    "url": "https://github.com/gkegke/ReadReadAI",
+    "images": [
+      "ReadReadAI2.png",
+      "ReadReadAI1.png"
+    ],
+    "tags": ["react", "javascript", "typescript", "wasm", "AI", "privacy", "offline-first"]
+  },
+   {
+    "id": 2,
+    "name": "ConsensusAI",
+    "description": "AI vs Humans. Questions/Predictions/Rankings",
+    "url": "https://github.com/gkegke/ConsensusAI",
+    "images": [
+      "ConsensusAI1.png",
+      "ConsensusAI2.png"
+    ],
+    "tags": ["django", "javascript", "htmx", "AI"]
+  },
+  {
+    "id": 3,
     "name": "LovoHato",
     "description": "Filter and organize large collections of media fast. A desktop application built to handle massive local datasets with ease.",
     "url": "https://github.com/gkegke/LovoHato",
@@ -13,32 +35,6 @@
     "tags": ["electron", "react", "full stack", "tooling"]
   },
   {
-    "id": 2,
-    "name": "ModernFileExplorer",
-    "description": "A replacement for the native file explorer focusing on keyboard navigation and speed.",
-    "url": "https://github.com/gkegke/ModernFileExplorer",
-    "images": [
-      "LovoHato2.png",
-      "LovoHato3.png",
-      "LovoHato4.png",
-      "LovoHato5.png"
-    ],
-    "tags": ["c#", "wpf", "windows", "productivity"]
-  },
-  {
-    "id": 3,
-    "name": "runrun",
-    "description": "A lightweight task runner and script manager for developer workflows.",
-    "url": "https://github.com/gkegke/ModernFileExplorer",
-    "images": [
-      "LovoHato2.png",
-      "LovoHato3.png",
-      "LovoHato4.png",
-      "LovoHato5.png"
-    ],
-    "tags": ["golang", "cli", "devops", "automation"]
-  },
-  {
     "id": 4,
     "name": "Memorii",
     "description": "Spaced repetition system for learning languages and complex topics.",
@@ -49,6 +45,6 @@
       "LovoHato4.png",
       "LovoHato5.png"
     ],
-    "tags": ["react", "firebase", "education", "mobile"]
+    "tags": ["flutter", "firebase", "education", "mobile"]
   }
 ]
